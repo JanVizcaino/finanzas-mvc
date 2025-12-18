@@ -24,13 +24,11 @@ class PlanController {
         $planModel = new Plan($db);
         $expenseModel = new Expense($db);
 
-        // Verificar acceso básico
         $plan = $planModel->getPlanDetails($planId, $_SESSION['user_id']);
         if (!$plan) die("Acceso denegado");
 
-        // NUEVO: Obtener datos extra para permisos
-        $currentUserRole = $planModel->getUserRole($planId, $_SESSION['user_id']); // 'admin' o 'member'
-        $members = $planModel->getMembers($planId); // Lista de gente para borrar
+        $currentUserRole = $planModel->getUserRole($planId, $_SESSION['user_id']); 
+        $members = $planModel->getMembers($planId); 
         $expenses = $expenseModel->getByPlan($planId);
 
         require '../views/layout/header.php';
@@ -46,8 +44,6 @@ class PlanController {
     }
 
     public function storeExpense() {
-        // ... (Tu código existente para guardar gasto) ...
-        // Este no cambia, todos pueden añadir
         $db = (new Database())->getConnection();
         $expenseModel = new Expense($db);
         $expenseModel->create($_POST['plan_id'], $_SESSION['user_id'], $_POST['title'], $_POST['amount'], $_POST['category']);

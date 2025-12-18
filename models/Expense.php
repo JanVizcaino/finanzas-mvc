@@ -7,7 +7,6 @@ class Expense {
         $this->conn = $db;
     }
 
-    // Obtener gastos de UN PLAN específico
     public function getByPlan($planId) {
         $query = "SELECT e.*, u.username FROM " . $this->table . " e 
                   JOIN users u ON e.user_id = u.id

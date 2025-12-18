@@ -7,7 +7,6 @@ class User {
         $this->conn = $db;
     }
 
-    // Registro (Igual que antes)
     public function register($username, $email, $password) {
         $query = "INSERT INTO " . $this->table . " (username, email, password) VALUES (:username, :email, :password) RETURNING id";
         $stmt = $this->conn->prepare($query);
@@ -17,12 +16,11 @@ class User {
         $stmt->bindParam(":password", $password_hash);
         
         if($stmt->execute()) {
-            return $stmt->fetch(PDO::FETCH_ASSOC)['id']; // Devolvemos el ID creado
+            return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
         }
         return false;
     }
 
-    // NUEVO: Login
     public function login($email, $password) {
         $query = "SELECT * FROM " . $this->table . " WHERE email = :email";
         $stmt = $this->conn->prepare($query);
