@@ -3,15 +3,18 @@ require_once '../config/Database.php';
 require_once '../models/User.php';
 require_once '../models/Plan.php';
 
-class UserController {
-    
-    public function login() {
+class UserController
+{
+
+    public function login()
+    {
         require '../views/layout/header.php';
         require '../views/auth/login.php';
         require '../views/layout/footer.php';
     }
 
-    public function authenticate() {
+    public function authenticate()
+    {
         $db = (new Database())->getConnection();
         $user = new User($db);
         $result = $user->login($_POST['email'], $_POST['password']);
@@ -25,13 +28,15 @@ class UserController {
         }
     }
 
-    public function register() {
+    public function register()
+    {
         require '../views/layout/header.php';
         require '../views/auth/register.php';
         require '../views/layout/footer.php';
     }
 
-    public function store() {
+    public function store()
+    {
         $db = (new Database())->getConnection();
         $user = new User($db);
         if ($user->register($_POST['username'], $_POST['email'], $_POST['password'])) {
@@ -41,16 +46,18 @@ class UserController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
         header("Location: index.php");
     }
 
-public function storeMember() {
+    public function storeMember()
+    {
         $db = (new Database())->getConnection();
         $user = new User($db);
         $plan = new Plan($db);
-        
+
         $planId = $_POST['plan_id'];
         $email = $_POST['email'];
         $username = $_POST['username'];
@@ -60,7 +67,7 @@ public function storeMember() {
         if ($role !== 'admin') die("No tienes permisos para añadir gente.");
 
         $targetUserId = null;
-        
+
         $existingUser = $user->findByEmail($email);
 
         if ($existingUser) {
@@ -68,23 +75,24 @@ public function storeMember() {
         } else {
             $targetUserId = $user->register($username, $email, $password);
         }
-        
+
         if ($targetUserId) {
             try {
                 $plan->addMember($planId, $targetUserId, 'member');
             } catch (Exception $e) {
             }
-            
+
             header("Location: index.php?action=view_plan&id=" . $planId);
         } else {
             echo "Error: No se pudo gestionar el usuario.";
         }
     }
 
-    public function removeMember() {
+    public function removeMember()
+    {
         $db = (new Database())->getConnection();
         $plan = new Plan($db);
-        
+
         $planId = $_GET['plan_id'];
         $targetUserId = $_GET['user_id'];
 
@@ -96,6 +104,4 @@ public function storeMember() {
         $plan->removeMember($planId, $targetUserId);
         header("Location: index.php?action=view_plan&id=" . $planId);
     }
-
-} 
-?>
+}

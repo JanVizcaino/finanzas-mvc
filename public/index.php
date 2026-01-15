@@ -1,8 +1,8 @@
 <?php
-session_start(); 
+session_start();
 
 require_once '../config/Database.php';
-require_once '../controllers/ExpenseController.php'; 
+require_once '../controllers/ExpenseController.php';
 require_once '../controllers/UserController.php';
 require_once '../controllers/PlanController.php';
 
@@ -45,7 +45,7 @@ switch ($action) {
     // Acciones dentro del plan
     case 'store_member':
         (new UserController())->storeMember();
-        break; // Crear usuario desde el plan
+        break;
     case 'store_expense':
         (new ExpenseController())->store();
         break;

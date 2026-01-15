@@ -1,13 +1,16 @@
 <?php
-class Expense {
+class Expense
+{
     private $conn;
     private $table = "expenses";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function getByPlan($planId) {
+    public function getByPlan($planId)
+    {
         $query = "SELECT e.*, u.username FROM " . $this->table . " e 
                   JOIN users u ON e.user_id = u.id
                   WHERE plan_id = :plan_id ORDER BY created_at DESC";
@@ -17,7 +20,8 @@ class Expense {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create($planId, $userId, $title, $amount, $category) {
+    public function create($planId, $userId, $title, $amount, $category)
+    {
         $query = "INSERT INTO " . $this->table . " (plan_id, user_id, title, amount, category) 
                   VALUES (:plan_id, :user_id, :title, :amount, :category)";
         $stmt = $this->conn->prepare($query);
@@ -29,11 +33,11 @@ class Expense {
         return $stmt->execute();
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         return $stmt->execute();
     }
 }
-?>

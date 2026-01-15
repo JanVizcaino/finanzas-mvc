@@ -1,12 +1,14 @@
 <?php
 require_once '../config/Database.php';
 require_once '../models/Expense.php';
-require_once '../models/Plan.php'; 
+require_once '../models/Plan.php';
 
-class ExpenseController {
-    
- public function store() {
-        
+class ExpenseController
+{
+
+    public function store()
+    {
+
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
@@ -17,21 +19,22 @@ class ExpenseController {
 
         if (isset($_POST['plan_id'], $_POST['title'], $_POST['amount'])) {
             $expenseModel->create(
-                $_POST['plan_id'], 
-                $_SESSION['user_id'], 
-                $_POST['title'], 
-                $_POST['amount'], 
+                $_POST['plan_id'],
+                $_SESSION['user_id'],
+                $_POST['title'],
+                $_POST['amount'],
                 $_POST['category']
             );
-            
+
             header("Location: index.php?action=view_plan&id=" . $_POST['plan_id']);
-            exit; 
+            exit;
         } else {
             echo "Faltan datos para crear el gasto.";
         }
     }
 
-    public function delete() {
+    public function delete()
+    {
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
@@ -54,4 +57,3 @@ class ExpenseController {
         }
     }
 }
-?>

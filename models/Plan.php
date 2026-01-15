@@ -1,13 +1,16 @@
 <?php
-class Plan {
+class Plan
+{
     private $conn;
     private $table = "financial_plans";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function create($name, $userId) {
+    public function create($name, $userId)
+    {
         try {
             $this->conn->beginTransaction();
 
@@ -28,7 +31,8 @@ class Plan {
         }
     }
 
-    public function getPlansByUser($userId) {
+    public function getPlansByUser($userId)
+    {
         $query = "SELECT p.*, pm.role FROM financial_plans p 
                   JOIN plan_members pm ON p.id = pm.plan_id 
                   WHERE pm.user_id = :user_id ORDER BY p.created_at DESC";
@@ -38,7 +42,8 @@ class Plan {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getPlanDetails($planId, $userId) {
+    public function getPlanDetails($planId, $userId)
+    {
         $query = "SELECT p.* FROM financial_plans p 
                   JOIN plan_members pm ON p.id = pm.plan_id 
                   WHERE p.id = :plan_id AND pm.user_id = :user_id";
@@ -49,16 +54,18 @@ class Plan {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getUserRole($planId, $userId) {
+    public function getUserRole($planId, $userId)
+    {
         $query = "SELECT role FROM plan_members WHERE plan_id = :plan_id AND user_id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
         $stmt->bindParam(":user_id", $userId);
         $stmt->execute();
-        return $stmt->fetchColumn(); 
+        return $stmt->fetchColumn();
     }
 
-    public function getMembers($planId) {
+    public function getMembers($planId)
+    {
         $query = "SELECT u.id, u.username, u.email, pm.role FROM users u 
                   JOIN plan_members pm ON u.id = pm.user_id 
                   WHERE pm.plan_id = :plan_id";
@@ -68,7 +75,8 @@ class Plan {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addMember($planId, $userId, $role = 'member') {
+    public function addMember($planId, $userId, $role = 'member')
+    {
         $query = "INSERT INTO plan_members (plan_id, user_id, role) VALUES (:plan_id, :user_id, :role)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
@@ -77,7 +85,8 @@ class Plan {
         return $stmt->execute();
     }
 
-    public function removeMember($planId, $userId) {
+    public function removeMember($planId, $userId)
+    {
         $query = "DELETE FROM plan_members WHERE plan_id = :plan_id AND user_id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
@@ -85,4 +94,3 @@ class Plan {
         return $stmt->execute();
     }
 }
-?>
