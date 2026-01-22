@@ -1,15 +1,30 @@
 <div class="flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4 mb-8 pb-6 border-b border-slate-200">
-    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">
-        Mis Planes Financieros
-    </h1>
+    <div class="w-full sm:w-auto">
+        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">
+            Mis Planes Financieros
+        </h1>
+        <p class="text-slate-500 text-sm mt-1">Gestiona tus proyectos y presupuestos</p>
+    </div>
     
-    <form action="index.php?action=store_plan" method="POST" class="w-full sm:w-auto flex gap-3">
-        <input type="text" name="name" placeholder="Nuevo Plan (ej: Viaje)" 
-               class="flex-1 sm:w-64 bg-white border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 block p-2.5 shadow-sm transition-all" required>
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm hover:shadow-md flex items-center gap-2 whitespace-nowrap">
-            <span class="text-lg leading-none">+</span> Crear
-        </button>
-    </form>
+    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-stretch sm:items-center">
+        
+        <a href="index.php?action=admin_panel" 
+           class="flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-slate-200 text-slate-600 font-semibold rounded-lg hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-600 transition-all shadow-sm group">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 group-hover:scale-110 transition-transform">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+            </svg>
+            <span>Admin</span>
+        </a>
+
+        <form action="index.php?action=store_plan" method="POST" class="flex gap-2 w-full sm:w-auto">
+            <input type="text" name="name" placeholder="Nuevo Plan (ej: Viaje)" 
+                   class="flex-1 sm:w-64 bg-white border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 block p-2.5 shadow-sm transition-all" required>
+            <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm hover:shadow-md flex items-center gap-2 whitespace-nowrap">
+                <span class="text-lg leading-none">+</span> <span class="hidden sm:inline">Crear</span>
+            </button>
+        </form>
+        
+    </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

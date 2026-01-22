@@ -20,16 +20,20 @@ class Expense
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create($planId, $userId, $title, $amount, $category)
+    public function create($planId, $userId, $title, $amount, $category, $receiptPath = null)
     {
-        $query = "INSERT INTO " . $this->table . " (plan_id, user_id, title, amount, category) 
-                  VALUES (:plan_id, :user_id, :title, :amount, :category)";
+        $query = "INSERT INTO " . $this->table . " (plan_id, user_id, title, amount, category, receipt_path) 
+                VALUES (:plan_id, :user_id, :title, :amount, :category, :receipt_path)";
+        
         $stmt = $this->conn->prepare($query);
+        
         $stmt->bindParam(":plan_id", $planId);
         $stmt->bindParam(":user_id", $userId);
         $stmt->bindParam(":title", $title);
         $stmt->bindParam(":amount", $amount);
         $stmt->bindParam(":category", $category);
+        $stmt->bindParam(":receipt_path", $receiptPath);
+        
         return $stmt->execute();
     }
 

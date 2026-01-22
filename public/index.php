@@ -5,6 +5,7 @@ require_once '../config/Database.php';
 require_once '../controllers/ExpenseController.php';
 require_once '../controllers/UserController.php';
 require_once '../controllers/PlanController.php';
+require_once '../controllers/AdminController.php'; 
 
 $action = $_GET['action'] ?? 'login';
 
@@ -55,6 +56,16 @@ switch ($action) {
     case 'remove_member':
         (new UserController())->removeMember();
         break;
+    
+    // Acciones dentro de administrador
+    case 'admin_panel': 
+        (new AdminController())->index();
+        break;
+
+    case 'admin_delete_user':
+        (new AdminController())->deleteUser();
+        break;
+
     default:
         echo "404 Not Found";
         break;

@@ -22,6 +22,7 @@ class UserController
         if ($result) {
             $_SESSION['user_id'] = $result['id'];
             $_SESSION['username'] = $result['username'];
+            $_SESSION['role'] = $result['role'];
             header("Location: index.php?action=dashboard");
         } else {
             echo "Credenciales incorrectas";

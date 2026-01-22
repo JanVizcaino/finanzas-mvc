@@ -49,6 +49,15 @@
                     </select>
                 </div>
 
+                <div class="sm:col-span-1 flex items-center justify-center">
+                    <label class="cursor-pointer w-full h-full flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-lg border border-slate-200 transition-colors" title="Adjuntar Recibo">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
+                        </svg>
+                        <input type="file" name="receipt" class="hidden"> 
+                    </label>
+                </div>
+
                 <div class="sm:col-span-1">
                     <button class="w-full h-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition-colors flex items-center justify-center text-xl shadow-md shadow-indigo-200">
                         +
@@ -63,12 +72,23 @@
                     <p class="text-slate-400 font-medium italic">No hay gastos registrados en este plan todavía.</p>
                 </div>
             <?php else: ?>
-                <?php foreach($expenses as $expense): ?>
+               <?php foreach($expenses as $expense): ?>
                     <div class="group bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all duration-200 flex justify-between items-center">
                         <div class="flex flex-col">
-                            <p class="font-bold text-slate-800 text-lg leading-tight group-hover:text-indigo-700 transition-colors">
-                                <?= htmlspecialchars($expense['title']) ?>
-                            </p>
+                            <div class="flex items-center gap-2">
+                                <p class="font-bold text-slate-800 text-lg leading-tight group-hover:text-indigo-700 transition-colors">
+                                    <?= htmlspecialchars($expense['title']) ?>
+                                </p>
+                                
+                                <?php if (!empty($expense['receipt_path'])): ?>
+                                    <a href="<?= htmlspecialchars($expense['receipt_path']) ?>" target="_blank" class="text-indigo-400 hover:text-indigo-600 transition-colors" title="Ver Comprobante">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                                            <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+
                             <div class="flex items-center gap-2 mt-1">
                                 <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                                     <?= htmlspecialchars($expense['category']) ?>
@@ -86,12 +106,12 @@
                             
                             <?php if ($currentUserRole === 'admin'): ?>
                                 <a href="index.php?action=delete_expense&id=<?= $expense['id'] ?>&plan_id=<?= $plan['id'] ?>" 
-                                   class="text-slate-300 hover:text-rose-500 hover:bg-rose-50 p-2 rounded-full transition-all"
-                                   onclick="return confirm('¿Borrar gasto?')"
-                                   title="Eliminar gasto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                class="text-slate-300 hover:text-rose-500 hover:bg-rose-50 p-2 rounded-full transition-all"
+                                onclick="return confirm('¿Borrar gasto?')"
+                                title="Eliminar gasto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                </svg>
                                 </a>
                             <?php endif; ?>
                         </div>
