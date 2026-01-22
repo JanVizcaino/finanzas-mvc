@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración del Plan</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: "Inter", sans-serif;
+            --color-primary: #D4AF37; 
+            --color-text: #0F172A;
+            --color-secondary: #64748B;
+            --color-background: #F8FAFC;
+            --color-success: #10B981;
+            --color-alert: #EF4444;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background min-h-screen flex flex-col font-sans">
+
+    <nav class="bg-white shadow-sm h-16 px-6 flex justify-between items-center z-10 relative">
+        <div class="flex items-center gap-2">
+            <a href="../dashboard/dashboard.html">
+                <img src="../../assets/Blue.png" class="w-14 h-5"></img>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 text-text">
+                <a href="../admin/admin-pannel.html">
+                <button class="hover:text-primary transition cursor-pointer">
+                    <i class="fa-solid fa-user-shield text-lg"></i>
+                </button>
+                </a>
+                <button class="hover:text-primary transition cursor-pointer">
+                    <i class="fa-regular fa-bell text-lg"></i>
+                </button>
+            </div>
+
+            <div class="h-4 w-px bg-secondary/30"></div>
+
+            <div class="flex items-center gap-3">
+                <div class="text-text">
+                    <i class="fa-solid fa-circle-user text-2xl"></i>
+                </div>
+                <div class="text-text text-base">
+                    <span class="font-normal">Hi, </span>
+                    <span class="font-bold">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto p-8 md:p-12 flex flex-col gap-9">
+        
+        <div class="flex justify-between items-start">
+            <div class="flex gap-6 items-center">
+                <a href="dashboard.html" class="flex items-center gap-2 text-secondary hover:text-primary transition bg-white px-3 py-1.5 rounded-md shadow-sm">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span class="text-sm font-medium">Go back</span>
+                </a>
+                <div class="flex flex-col">
+                    <h1 class="text-primary text-2xl font-bold">Viaje a Japón</h1>
+                    <p class="text-secondary text-base">Presupuesto para el viaje de verano.</p>
+                </div>
+            </div>
+            <div class="text-text text-xl font-medium">-150€</div>
+        </div>
+
+        <div class="border-b border-secondary/30 flex">
+            <a href="plan-details.html" class="px-6 py-3 border-b-2 border-transparent text-secondary hover:text-text text-sm">
+                Expenses
+            </a>
+            <a href="#" class="px-6 py-3 border-b-2 border-primary text-text text-sm font-medium">
+                Settings
+            </a>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <h2 class="text-text text-base font-medium">General Info</h2>
+            
+            <div class="flex gap-6">
+                <div class="flex-1 flex flex-col gap-1.5">
+                    <label class="text-text text-sm font-medium">Name*</label>
+                    <input type="text" value="Viaje a Japón" 
+                           class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text shadow-sm focus:outline-none focus:border-primary">
+                </div>
+                <div class="flex-1 flex flex-col gap-1.5">
+                    <label class="text-text text-sm font-medium">Currency</label>
+                    <div class="relative">
+                        <select class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text shadow-sm appearance-none focus:outline-none focus:border-primary">
+                            <option>Euros (€)</option>
+                            <option>USD ($)</option>
+                        </select>
+                        <div class="absolute right-3 top-3 pointer-events-none text-secondary">
+                             <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+                <label class="text-text text-sm font-medium">Detail</label>
+                <textarea class="w-full p-3 bg-white border border-secondary/30 rounded-md text-sm text-text shadow-sm h-24 resize-none focus:outline-none focus:border-primary">Presupuesto para el viaje de verano.</textarea>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <h2 class="text-text text-base font-medium">Plan Users</h2>
+            
+            <div class="bg-white rounded-md shadow-sm flex flex-col">
+                
+                <div class="grid grid-cols-5 gap-4 px-6 py-3 border-b border-secondary/10 bg-secondary/5">
+                    <div class="text-center text-text text-sm font-semibold">USER</div>
+                    <div class="text-center text-text text-sm font-semibold">MAIL</div>
+                    <div class="text-center text-text text-sm font-semibold">ROLE</div>
+                    <div class="text-center text-text text-sm font-semibold">BALANCE</div>
+                    <div class="text-center text-text text-sm font-semibold">ACTIONS</div>
+                </div>
+
+                <div class="grid grid-cols-5 gap-4 px-6 py-4 items-center border-b border-secondary/10 hover:bg-secondary/5 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center text-secondary text-xs font-bold">JD</div>
+                        <span class="text-text text-base font-medium">John Doe</span>
+                    </div>
+                    <div class="text-center text-secondary text-sm">john.doe@gmail.com</div>
+                    <div class="flex justify-center">
+                        <div class="px-2.5 py-0.5 bg-primary/10 rounded-full flex items-center gap-1.5">
+                            <div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                            <span class="text-primary text-xs font-medium">ADMIN</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="px-2.5 py-0.5 bg-alert/10 rounded-full">
+                            <span class="text-alert text-xs font-medium">-120€</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <button class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                             <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                 <div class="grid grid-cols-5 gap-4 px-6 py-4 items-center hover:bg-secondary/5 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center text-secondary text-xs font-bold">JS</div>
+                        <span class="text-text text-base font-medium">Jane Smith</span>
+                    </div>
+                    <div class="text-center text-secondary text-sm">jane.smith@gmail.com</div>
+                    <div class="flex justify-center">
+                        <div class="px-2.5 py-0.5 bg-secondary/10 rounded-full flex items-center gap-1.5">
+                            <div class="w-1.5 h-1.5 bg-secondary rounded-full"></div>
+                            <span class="text-secondary text-xs font-medium">MEMBER</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="px-2.5 py-0.5 bg-alert/10 rounded-full">
+                            <span class="text-alert text-xs font-medium">-30€</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <button class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                             <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="px-6 py-3 border-t border-secondary/20 flex justify-between items-center">
+                    <span class="text-text text-xs">Showing <b>1</b> to <b>5</b> of <b>10</b> results</span>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-2 border border-secondary/30 rounded-md text-sm font-medium hover:bg-secondary/5 disabled:opacity-50 cursor-pointer">Previous</button>
+                        <button class="px-4 py-2 border border-secondary/30 rounded-md text-sm font-medium hover:bg-secondary/5 cursor-pointer">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-5 mt-4">
+            <button class="h-10 px-4 bg-white border border-secondary/30 hover:bg-alert/5 hover:border-alert hover:text-alert transition rounded-md flex items-center gap-2 text-secondary text-sm font-medium cursor-pointer">
+                <i class="fa-solid fa-trash"></i>
+                Delete Plan
+            </button>
+            
+            <button class="h-10 px-4 bg-primary hover:opacity-90 transition rounded-md flex items-center gap-2 text-white text-sm font-medium shadow-sm cursor-pointer">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Changes
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="bg-text py-9 px-16 flex justify-center items-center gap-4 text-center mt-auto">
+        <div class="flex flex-col gap-5 flex-1 items-start">
+            <span class="text-white text-sm">© 2026 Odin MVC</span>
+            <span class="text-white text-sm">Práctica de Desarrollo Web.</span>
+        </div>
+        <img src="../../assets/GoldandBlue.png" class="w-24 h-9"></img>
+    </footer>
+
+</body>
+</html>

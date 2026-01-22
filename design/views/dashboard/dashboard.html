@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mis Planes</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+         @theme {
+            --font-sans: "Inter", sans-serif;
+            --color-primary: #D4AF37; 
+            --color-text: #0F172A;
+            --color-secondary: #64748B;
+            --color-background: #F8FAFC;
+            --color-success: #10B981;
+            --color-alert: #EF4444;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background min-h-screen flex flex-col font-sans">
+
+    <nav class="bg-white shadow-sm h-16 px-6 flex justify-between items-center z-10 relative">
+        <div class="flex items-center gap-2">
+            <a href="../dashboard/dashboard.html">
+                <img src="../../assets/Blue.png" class="w-14 h-5"></img>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 text-text">
+                <a href="../admin/admin-pannel.html">
+                <button class="hover:text-primary transition cursor-pointer">
+                    <i class="fa-solid fa-user-shield text-lg"></i>
+                </button>
+                </a>
+                <button class="hover:text-primary transition cursor-pointer">
+                    <i class="fa-regular fa-bell text-lg"></i>
+                </button>
+            </div>
+
+            <div class="h-4 w-px bg-secondary/30"></div>
+
+            <div class="flex items-center gap-3">
+                <div class="text-text">
+                    <i class="fa-solid fa-circle-user text-2xl"></i>
+                </div>
+                <div class="text-text text-base">
+                    <span class="font-normal">Hi, </span>
+                    <span class="font-bold">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-12 flex flex-col gap-9">
+        
+        <div class="flex justify-between items-center w-full max-w-[950px] mx-auto">
+            <div class="flex flex-col gap-2">
+                <h1 class="text-primary text-2xl font-bold">My Plans</h1>
+                <p class="text-secondary text-base">Configure and manage your projects and budgets</p>
+            </div>
+            
+            <a href="add-plan.html" class="h-10 px-4 bg-primary hover:opacity-90 transition rounded-md flex items-center gap-2 text-white text-sm font-medium shadow-sm">
+                <i class="fa-solid fa-plus text-xs"></i>
+                Add Plan
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-[950px] mx-auto">
+            <a href="plan-details.html">
+            <div class="bg-white rounded-lg shadow-sm p-5 flex flex-col gap-2 hover:shadow-md transition">
+                <div class="w-10 h-10 flex items-center justify-center bg-primary/25 rounded-full text-primary mb-2">
+                    <i class="fa-solid fa-dollar-sign"></i>
+                </div>
+                <h3 class="text-secondary text-base font-medium">Plan name</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-text text-3xl font-medium">150€</span>
+                    <span class="text-secondary text-xs font-thin mb-1">Last: 12/12/2025</span>
+                </div>
+            </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-text py-9 px-16 flex justify-center items-center gap-4 text-center mt-auto">
+        <div class="flex flex-col gap-5 flex-1 items-start">
+            <span class="text-white text-sm">© 2026 Odin MVC</span>
+            <span class="text-white text-sm">Práctica de Desarrollo Web.</span>
+        </div>
+        <img src="../../assets/GoldandBlue.png" class="w-24 h-9"></img>
+    </footer>
+
+</body>
+</html>

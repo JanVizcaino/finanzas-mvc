@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Plan - Gastos</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: "Inter", sans-serif;
+            --color-primary: #D4AF37; 
+            --color-text: #0F172A;
+            --color-secondary: #64748B;
+            --color-background: #F8FAFC;
+            --color-success: #10B981;
+            --color-alert: #EF4444;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-background min-h-screen flex flex-col font-sans">
+
+    <nav class="bg-white shadow-sm h-16 px-6 flex justify-between items-center z-10 relative">
+        <div class="flex items-center gap-2">
+            <a href="../dashboard/dashboard.html">
+                <img src="../../assets/Blue.png" class="w-14 h-5"></img>
+            </a>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 text-text">
+                <a href="../admin/admin-pannel.html">
+                <button class="hover:text-primary transition cursor-pointer">
+                    <i class="fa-solid fa-user-shield text-lg"></i>
+                </button>
+                </a>
+                <button class="hover:text-primary transition cursor-pointer">
+                    <i class="fa-regular fa-bell text-lg"></i>
+                </button>
+            </div>
+
+            <div class="h-4 w-px bg-secondary/30"></div>
+
+            <div class="flex items-center gap-3">
+                <div class="text-text">
+                    <i class="fa-solid fa-circle-user text-2xl"></i>
+                </div>
+                <div class="text-text text-base">
+                    <span class="font-normal">Hi, </span>
+                    <span class="font-bold">User</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto p-8 md:p-12 flex flex-col gap-9">
+        
+        <div class="flex justify-between items-start">
+            <div class="flex gap-6 items-center">
+                <a href="dashboard.html" class="flex items-center gap-2 text-secondary hover:text-primary transition bg-white px-3 py-1.5 rounded-md shadow-sm">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span class="text-sm font-medium">Go back</span>
+                </a>
+                
+                <div class="flex flex-col">
+                    <h1 class="text-primary text-2xl font-bold">Viaje a Japón</h1>
+                    <p class="text-secondary text-base">Presupuesto para el viaje de verano.</p>
+                </div>
+            </div>
+            
+            <div class="text-text text-xl font-medium">-150€</div>
+        </div>
+
+        <div class="border-b border-secondary/30 flex">
+            <a href="#" class="px-6 py-3 border-b-2 border-primary text-text text-sm font-medium">
+                Expenses
+            </a>
+            <a href="plan-settings.html" class="px-6 py-3 border-b-2 border-transparent text-secondary hover:text-text text-sm">
+                Settings
+            </a>
+        </div>
+
+        <div class="flex justify-between items-center">
+            <div class="flex gap-4">
+                <div class="relative">
+                    <select class="h-10 pl-3 pr-8 bg-white border border-secondary/30 rounded-md text-secondary text-sm font-medium appearance-none focus:outline-none focus:border-primary">
+                        <option>User: All</option>
+                        <option>John Doe</option>
+                        <option>Jane Smith</option>
+                    </select>
+                    <div class="absolute right-3 top-3 pointer-events-none text-secondary">
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <select class="h-10 pl-3 pr-8 bg-white border border-secondary/30 rounded-md text-secondary text-sm font-medium appearance-none focus:outline-none focus:border-primary">
+                        <option>Category: All</option>
+                        <option>Food</option>
+                        <option>Transport</option>
+                        <option>Lodging</option>
+                    </select>
+                    <div class="absolute right-3 top-3 pointer-events-none text-secondary">
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <a href="add-expense.html" class="h-10 px-4 bg-primary hover:opacity-90 transition rounded-md flex items-center gap-2 text-white text-sm font-medium shadow-sm">
+                <i class="fa-solid fa-plus text-xs"></i>
+                Add expense
+            </a>
+        </div>
+
+        <div class="flex flex-col gap-3">
+            
+            <div class="bg-white rounded-md shadow-sm px-6 py-3 flex justify-between items-center border border-transparent hover:border-secondary/30 transition">
+                <div class="flex items-center gap-4 w-1/2">
+                    <div class="flex flex-col">
+                        <span class="text-text text-base font-medium">Cena en Tokyo</span>
+                        <span class="text-secondary text-sm">Sushi para el equipo</span>
+                    </div>
+                    <div class="flex items-center gap-3 pl-4 border-l border-secondary/20">
+                        <div class="bg-secondary/10 px-3 py-1 rounded-full flex items-center gap-2">
+                            <div class="w-1.5 h-1.5 bg-text rounded-full"></div>
+                            <span class="text-text text-xs font-medium">Food</span>
+                        </div>
+                        <span class="text-secondary text-sm">paid by <b>John</b></span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div class="bg-alert/10 px-3 py-1 rounded-full">
+                        <span class="text-alert text-xs font-medium">-120€</span>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </button>
+                        <button class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-md shadow-sm px-6 py-3 flex justify-between items-center border border-transparent hover:border-secondary/30 transition">
+                <div class="flex items-center gap-4 w-1/2">
+                    <div class="flex flex-col">
+                        <span class="text-text text-base font-medium">Taxi Aeropuerto</span>
+                        <span class="text-secondary text-sm">Transfer</span>
+                    </div>
+                    <div class="flex items-center gap-3 pl-4 border-l border-secondary/20">
+                        <div class="bg-secondary/10 px-3 py-1 rounded-full flex items-center gap-2">
+                            <div class="w-1.5 h-1.5 bg-text rounded-full"></div>
+                            <span class="text-text text-xs font-medium">Transport</span>
+                        </div>
+                        <span class="text-secondary text-sm">paid by <b>Jane</b></span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="bg-alert/10 px-3 py-1 rounded-full">
+                        <span class="text-alert text-xs font-medium">-30€</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </button>
+                        <button class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-text py-9 px-16 flex justify-center items-center gap-4 text-center mt-auto">
+        <div class="flex flex-col gap-5 flex-1 items-start">
+            <span class="text-white text-sm">© 2026 Odin MVC</span>
+            <span class="text-white text-sm">Práctica de Desarrollo Web.</span>
+        </div>
+        <img src="../../assets/GoldandBlue.png" class="w-24 h-9"></img>
+    </footer>
+</body>
+</html>
