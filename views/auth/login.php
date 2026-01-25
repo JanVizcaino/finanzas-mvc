@@ -1,83 +1,62 @@
 <div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-xl border border-gray-100">
-        
-        <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">
-                Bienvenido de nuevo
-            </h2>
-            <p class="mt-2 text-sm text-gray-600">
-                Ingresa tus credenciales para acceder a tus finanzas.
-            </p>
+    <div class="w-96 bg-white rounded-lg shadow-md p-9 py-6 flex flex-col items-center gap-5">
+
+        <div class="flex flex-col items-center gap-5">
+            <img src="../../assets/BlueandGold.png" class="w-40 h-14" alt="Logo">
+
+            <div class="text-center">
+                <h1 class="text-text text-base font-semibold">Bienvenido de nuevo</h1>
+                <p class="text-secondary text-sm mt-3 w-60 mx-auto leading-tight">
+                    Ingresa tus credenciales para acceder a tus finanzas.
+                </p>
+            </div>
         </div>
 
         <?php if (isset($_GET['error'])): ?>
-            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4" role="alert">
-                <p class="text-sm text-red-700">
-                    <span class="font-bold">Error:</span> Credenciales incorrectas. Inténtalo de nuevo.
+            <div class="w-full bg-red-50 border-l-4 border-red-500 p-3 rounded-r-md" role="alert">
+                <p class="text-xs text-red-700">
+                    <span class="font-bold">Error:</span> Credenciales incorrectas.
                 </p>
             </div>
         <?php endif; ?>
 
-        <form class="mt-8 space-y-6" action="index.php?action=authenticate" method="POST">
-            
-            <div class="rounded-md shadow-sm space-y-4">
-                
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
-                        Correo Electrónico
-                    </label>
-                    <input id="email" name="email" type="email" required 
-                        class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200" 
-                        placeholder="tu@email.com">
-                </div>
+        <form class="w-full py-5 border-b border-secondary/20 flex flex-col gap-6" action="index.php?action=authenticate" method="POST">
 
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
-                        Contraseña
-                    </label>
-                    <input id="password" name="password" type="password" required 
-                        class="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition-colors duration-200" 
-                        placeholder="••••••••">
-                </div>
-
+            <div class="flex flex-col gap-2">
+                <label for="email" class="text-text text-sm font-medium">Correo Electrónico</label>
+                <input id="email" name="email" type="email" required placeholder="tu@email.com"
+                    class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 transition-colors">
             </div>
 
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                    <label for="remember_me" class="ml-2 block text-sm text-gray-900">
-                        Recordarme
-                    </label>
-                </div>
-
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                </div>
+            <div class="flex flex-col gap-2">
+                <label for="password" class="text-text text-sm font-medium">Contraseña</label>
+                <input id="password" name="password" type="password" required placeholder="••••••••"
+                    class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 transition-colors">
             </div>
 
-            <div>
-                <button type="submit" 
-                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-md hover:shadow-lg">
-                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400 transition ease-in-out duration-150" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    Iniciar Sesión
-                </button>
+            <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2">
+                    <input id="remember_me" name="remember_me" type="checkbox" 
+                        class="h-3 w-3 text-primary focus:ring-primary border-secondary/30 rounded cursor-pointer">
+                    <label for="remember_me" class="text-secondary cursor-pointer select-none">Recordarme</label>
+                </div>
+                <a href="#" class="font-medium text-primary hover:opacity-80">
+                    ¿Olvidaste tu contraseña?
+                </a>
             </div>
 
+            <button type="submit"
+                class="w-full h-10 bg-primary hover:opacity-90 transition-opacity rounded-md flex justify-center items-center gap-2 text-white font-medium text-sm mt-2 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                Iniciar Sesión
+            </button>
         </form>
         
-        <div class="text-center mt-4 border-t pt-4 border-gray-100">
-            <p class="text-sm text-gray-600">
-                ¿Aún no tienes cuenta? 
-                <a href="index.php?action=register" class="font-medium text-blue-600 hover:text-blue-500 transition-colors">
-                    Regístrate gratis
-                </a>
-            </p>
+        <div class="text-center text-xs">
+            <span class="text-text">¿Aún no tienes cuenta? </span>
+            <a href="index.php?action=register" class="text-primary font-medium hover:underline ml-1">
+                Regístrate gratis
+            </a>
         </div>
 
     </div>

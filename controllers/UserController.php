@@ -10,7 +10,6 @@ class UserController
     {
         require '../views/layout/header.php';
         require '../views/auth/login.php';
-        require '../views/layout/footer.php';
     }
 
     public function authenticate()
@@ -33,7 +32,6 @@ class UserController
     {
         require '../views/layout/header.php';
         require '../views/auth/register.php';
-        require '../views/layout/footer.php';
     }
 
     public function store()
