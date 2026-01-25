@@ -1,5 +1,6 @@
-<div class="w-96 bg-white rounded-lg shadow-md p-9 flex flex-col items-center gap-5">
-    
+<div class="min-h-[80vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-96 bg-white rounded-lg shadow-md p-9 py-6 flex flex-col items-center gap-5">
+
     <div class="flex flex-col items-center gap-5">
         <img src="../../assets/BlueandGold.png" class="w-40 h-14" alt="Logo">
         
@@ -45,4 +46,5 @@
         </a>
     </div>
 
+    </div>
 </div>

@@ -7,7 +7,8 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'user'
 );
 
 CREATE TABLE financial_plans (
@@ -34,4 +35,10 @@ CREATE TABLE expenses (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (username, email, password) VALUES ('admin', 'admin@test.com', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm');
+INSERT INTO users (username, email, password, role)
+VALUES (
+  'jan',
+  'jan@gmail.com',
+  '1234',
+  'admin'
+);

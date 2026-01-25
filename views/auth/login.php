@@ -2,7 +2,7 @@
     <div class="w-96 bg-white rounded-lg shadow-md p-9 py-6 flex flex-col items-center gap-5">
 
         <div class="flex flex-col items-center gap-5">
-            <img src="../../assets/BlueandGold.png" class="w-40 h-14" alt="Logo">
+        <img src="../../assets/BlueandGold.png" class="w-40 h-14" alt="Logo">
 
             <div class="text-center">
                 <h1 class="text-text text-base font-semibold">Bienvenido de nuevo</h1>

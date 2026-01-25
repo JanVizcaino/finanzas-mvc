@@ -56,9 +56,9 @@
         <h2 class="text-text text-base font-medium">Miembros del Plan</h2>
         
         <?php if ($currentUserRole === 'admin'): ?>
-            <a href="index.php?action=add_member_view&plan_id=<?= $plan['id'] ?>" class="text-primary text-sm font-medium hover:underline cursor-pointer">
+            <button onclick="openMemberSlideOver()" class="text-primary text-sm font-medium hover:underline cursor-pointer bg-transparent border-none flex items-center">
                 <i class="fa-solid fa-user-plus mr-1"></i> Añadir Usuario
-            </a>
+            </button>
         <?php endif; ?>
     </div>
     
@@ -134,3 +134,76 @@
         Guardar Cambios
     </button>
 </div>
+
+<div id="memberSlideOverBackdrop" class="fixed inset-0 z-50 invisible">
+    
+    <div id="memberSlideOverOverlay" onclick="closeMemberSlideOver()" class="absolute inset-0 bg-gray-900/50 opacity-0 transition-opacity duration-300 ease-in-out"></div>
+
+    <div class="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
+        
+        <div id="memberSlideOverPanel" class="pointer-events-auto w-screen max-w-md transform translate-x-full transition-transform duration-300 ease-in-out bg-white shadow-xl flex flex-col h-full">
+            
+            <div class="h-16 px-8 py-3.5 border-b border-secondary/20 flex justify-between items-center bg-white flex-shrink-0">
+                <h1 class="text-text text-xl font-bold">Añadir Miembro</h1>
+                <button onclick="closeMemberSlideOver()" class="w-10 h-10 flex justify-center items-center text-secondary hover:text-text transition cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="addMemberForm" action="index.php?action=store_member" method="POST" class="flex-1 px-8 py-6 flex flex-col gap-5 overflow-y-auto">
+                <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-text text-sm font-medium">Nombre de Usuario*</label>
+                    <input type="text" name="username" placeholder="Ej: JohnDoe" required
+                           class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 shadow-sm">
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <label class="text-text text-sm font-medium">Correo Electrónico*</label>
+                    <input type="email" name="email" placeholder="ejemplo@email.com" required
+                           class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 shadow-sm">
+                </div>
+
+            </form>
+
+            <div class="h-20 px-4 py-2.5 border-t border-secondary/20 flex justify-end items-center gap-4 bg-white flex-shrink-0">
+                <button type="button" onclick="closeMemberSlideOver()" class="h-10 px-4 bg-white border border-secondary/30 hover:bg-secondary/5 rounded-md flex items-center justify-center text-secondary text-sm font-medium transition cursor-pointer">
+                    Cancelar
+                </button>
+                <button type="submit" form="addMemberForm" class="h-10 px-4 bg-primary hover:opacity-90 rounded-md flex items-center justify-center gap-2 text-white text-sm font-medium transition shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Añadir
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function openMemberSlideOver() {
+        const backdrop = document.getElementById('memberSlideOverBackdrop');
+        const overlay = document.getElementById('memberSlideOverOverlay');
+        const panel = document.getElementById('memberSlideOverPanel');
+
+        backdrop.classList.remove('invisible');
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0');
+            panel.classList.remove('translate-x-full');
+        }, 10);
+    }
+
+    function closeMemberSlideOver() {
+        const backdrop = document.getElementById('memberSlideOverBackdrop');
+        const overlay = document.getElementById('memberSlideOverOverlay');
+        const panel = document.getElementById('memberSlideOverPanel');
+
+        overlay.classList.add('opacity-0');
+        panel.classList.add('translate-x-full');
+
+        setTimeout(() => {
+            backdrop.classList.add('invisible');
+        }, 300);
+    }
+</script>

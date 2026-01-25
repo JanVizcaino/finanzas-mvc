@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanzas SaaS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style type="text/tailwindcss">
         @theme {
             --font-sans: "Inter", sans-serif;
@@ -34,13 +35,17 @@
             <div class="flex items-center gap-6">
 
                 <div class="flex items-center gap-4 text-text">
-                    <a href="#" class="hover:text-primary transition cursor-pointer" title="Admin Panel">
-                        <i class="fa-solid fa-user-shield text-lg"></i>
-                    </a>
+                    <?php if ($_SESSION['role'] == 'admin' ): ?>
 
-                    <button class="hover:text-primary transition cursor-pointer" title="Notificaciones">
-                        <i class="fa-regular fa-bell text-lg"></i>
-                    </button>
+                        <a href="index.php?action=admin_panel" class="hover:text-primary transition cursor-pointer" title="Admin Panel">
+                            <i class="fa-solid fa-user-shield text-lg"></i>
+                        </a>
+
+                    <?php endif; ?>
+                
+                    <a href="index.php?action=admin_panel" class="hover:text-primary transition cursor-pointer" title="Admin Panel">
+                        <i class="fa-solid fa-moon text-lg"></i>
+                    </a>
                 </div>
 
                 <div class="h-4 w-px bg-secondary/30"></div>
@@ -68,4 +73,4 @@
 
     <?php endif; ?>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">

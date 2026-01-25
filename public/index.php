@@ -42,8 +42,14 @@ switch ($action) {
     case 'view_plan':
         (new PlanController())->view();
         break;
-
+    case 'plan_settings':
+        (new PlanController())->viewSettings();
+    break;
+    case 'update_plan':
+        (new PlanController())->update();
+    break;
     // Acciones dentro del plan
+    
     case 'store_member':
         (new UserController())->storeMember();
         break;
