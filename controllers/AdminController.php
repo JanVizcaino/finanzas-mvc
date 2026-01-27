@@ -42,15 +42,28 @@ class AdminController
         require '../views/layout/footer.php';        
     }
 
-    public function deleteUser()
+    public function deleteUserAsAdmin()
     {
         $this->checkAdminAuth();
         
         if (isset($_GET['id'])) {
-            $this->adminModel->deleteUser($_GET['id']);
+            $this->adminModel->deleteUserAsAdmin($_GET['id']);
         }
         
         header("Location: index.php?action=admin_panel");
     }
+
+    public function deletePlanAsAdmin()
+    {
+        $this->checkAdminAuth();
+        
+        if (isset($_GET['id'])) {
+            $this->adminModel->deletePlanAsAdmin($_GET['id']);
+        }
+        
+        header("Location: index.php?action=admin_panel");
+    }
+
+    
 }
 ?>

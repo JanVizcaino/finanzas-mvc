@@ -69,8 +69,13 @@ switch ($action) {
         break;
 
     case 'admin_delete_user':
-        (new AdminController())->deleteUser();
+        (new AdminController())->deleteUserAsAdmin();
         break;
+
+    case 'admin_delete_plan':
+        (new AdminController())->deletePlanAsAdmin();
+        break;
+
 
     default:
         echo "404 Not Found";

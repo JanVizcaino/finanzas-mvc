@@ -59,23 +59,15 @@ class UserController
 
         $planId = $_POST['plan_id'];
         $email = $_POST['email'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
 
         $role = $plan->getUserRole($planId, $_SESSION['user_id']);
         if ($role !== 'admin') die("No tienes permisos para añadir gente.");
-
-        $targetUserId = null;
 
         $existingUser = $user->findByEmail($email);
 
         if ($existingUser) {
             $targetUserId = $existingUser['id'];
-        } else {
-            $targetUserId = $user->register($username, $email, $password);
-        }
 
-        if ($targetUserId) {
             try {
                 $plan->addMember($planId, $targetUserId, 'member');
             } catch (Exception $e) {
@@ -83,7 +75,7 @@ class UserController
 
             header("Location: index.php?action=view_plan&id=" . $planId);
         } else {
-            echo "Error: No se pudo gestionar el usuario.";
+            die("Error: El usuario con el email <b>$email</b> no está registrado en el sistema. Pídele que se registre antes de añadirlo.");
         }
     }
 

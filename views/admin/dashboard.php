@@ -92,14 +92,7 @@
 
             <div class="px-6 py-3 border-t border-secondary/20 flex justify-between items-center bg-white">
                 <span class="text-text text-xs">Mostrando <b><?= count($users) ?></b> resultados</span>
-                <div class="flex gap-2 opacity-50 pointer-events-none">
-                    <button class="px-4 py-2 border border-secondary/30 rounded-md text-sm font-medium flex items-center gap-2">
-                        <i class="fa-solid fa-chevron-left text-xs"></i> Anterior
-                    </button>
-                    <button class="px-4 py-2 border border-secondary/30 rounded-md text-sm font-medium flex items-center gap-2">
-                        Siguiente <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -143,7 +136,7 @@
                         <a href="index.php?action=view_plan&id=<?= $plan['id'] ?>" class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer mr-2" title="Ver Plan">
                             <i class="fa-solid fa-eye text-xs"></i>
                         </a>
-                        <a href="#" class="w-8 h-8 flex justify-center items-center bg-alert/10 rounded-full text-alert hover:bg-alert hover:text-white transition cursor-pointer" title="Eliminar Plan" onclick="return confirm('¿Borrar este plan?')">
+                        <a href="index.php?action=admin_delete_plan&id=<?= $plan['id'] ?>" class="w-8 h-8 flex justify-center items-center bg-alert/10 rounded-full text-alert hover:bg-alert hover:text-white transition cursor-pointer" title="Eliminar Plan" onclick="return confirm('¿Borrar este plan?')">
                              <i class="fa-solid fa-trash text-xs"></i>
                         </a>
                     </div>

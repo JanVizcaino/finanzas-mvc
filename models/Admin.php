@@ -28,17 +28,17 @@ class Admin
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deleteUser($userId)
+    public function deleteUserAsAdmin($userId)
     {
-        $query = "DELETE FROM users WHERE user_id = :user_id";
+        $query = "DELETE FROM users WHERE id = :user_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":user_id", $userId);
         return $stmt->execute();
     }
 
-    public function deletePlan($planId)
+    public function deletePlanAsAdmin($planId)
     {
-        $query = "DELETE FROM financial_plans WHERE planId = :planId";
+        $query = "DELETE FROM financial_plans WHERE id = :planId";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":planId", $planId);
         return $stmt->execute();
