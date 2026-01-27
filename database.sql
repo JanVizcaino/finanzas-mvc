@@ -7,6 +7,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    currency 
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'user'
 );
@@ -15,7 +16,9 @@ CREATE TABLE financial_plans (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     created_by INT REFERENCES users(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    detail text,
+    currency VARCHAR(3),
 );
 
 CREATE TABLE plan_members (

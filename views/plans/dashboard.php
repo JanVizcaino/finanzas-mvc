@@ -64,7 +64,7 @@
 
                 <div class="flex flex-col gap-2">
                     <label for="planDetail" class="text-text text-sm font-medium">Detalles / Descripción</label>
-                    <textarea id="planDetail" name="description" placeholder="Describe el objetivo de este plan..." 
+                    <textarea id="planDetail" name="detail" placeholder="Describe el objetivo de este plan..." 
                               class="w-full h-24 px-3 py-2 bg-white border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 shadow-sm resize-none"></textarea>
                 </div>
 

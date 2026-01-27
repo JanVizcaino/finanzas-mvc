@@ -2,82 +2,99 @@
 session_start();
 
 require_once '../config/Database.php';
-require_once '../controllers/ExpenseController.php';
 require_once '../controllers/UserController.php';
 require_once '../controllers/PlanController.php';
-require_once '../controllers/AdminController.php'; 
+require_once '../controllers/ExpenseController.php';
+require_once '../controllers/AdminController.php';
 
 $action = $_GET['action'] ?? 'login';
 
-if (!isset($_SESSION['user_id']) && !in_array($action, ['login', 'authenticate', 'register', 'store_user'])) {
+// lista de acciones permitidas para usuarios NO logueados (Invitados)
+$publicActions = ['login', 'authenticate', 'register', 'store_user'];
+
+if (!isset($_SESSION['user_id']) && !in_array($action, $publicActions)) {
     header("Location: index.php?action=login");
     exit;
 }
 
 switch ($action) {
-    // Auth
+
+    // Gestion de usuarios
     case 'login':
-        (new UserController())->login();
+        (new UserController())->login(); // Muestra formulario login
         break;
     case 'authenticate':
-        (new UserController())->authenticate();
+        (new UserController())->authenticate(); // Procesa el login
         break;
     case 'register':
-        (new UserController())->register();
+        (new UserController())->register(); // Muestra formulario registro
         break;
     case 'store_user':
-        (new UserController())->store();
+        (new UserController())->store(); // Guarda el usuario nuevo (Registro público)
         break;
     case 'logout':
-        (new UserController())->logout();
+        (new UserController())->logout(); // Cierra sesión
         break;
 
-    // Planes
+
+    // Gestion de planes
     case 'dashboard':
-        (new PlanController())->dashboard();
+        (new PlanController())->dashboard(); // Lista todos los planes del usuario
         break;
     case 'store_plan':
-        (new PlanController())->store();
+        (new PlanController())->store(); // Crea un plan nuevo
         break;
     case 'view_plan':
-        (new PlanController())->view();
+        (new PlanController())->view(); // Ver un plan individual (show)
         break;
-    case 'plan_settings':
-        (new PlanController())->viewSettings();
-    break;
-    case 'update_plan':
-        (new PlanController())->update();
-    break;
-    // Acciones dentro del plan
+    case 'delete_plan':
+        (new PlanController())->delete(); // Ver un plan individual (show)
+        break;
     
+    // Configuracion del plan (solo admins del plan)
+    case 'plan_settings':
+        (new PlanController())->viewSettings(); // Muestra formulario de editar plan
+        break;
+    case 'update_plan':
+        (new PlanController())->update(); // Procesa los cambios del plan (Nombre, desc...)
+        break;
     case 'store_member':
-        (new UserController())->storeMember();
-        break;
-    case 'store_expense':
-        (new ExpenseController())->store();
-        break;
-    case 'delete_expense':
-        (new ExpenseController())->delete();
+        (new PlanController())->storeMember(); // Añadir (invitar) miembro existente
         break;
     case 'remove_member':
-        (new UserController())->removeMember();
-        break;
-    
-    // Acciones dentro de administrador
-    case 'admin_panel': 
-        (new AdminController())->index();
+        (new PlanController())->removeMember(); // Expulsar miembro
         break;
 
+
+    // Gestion de gastos
+    case 'store_expense':
+        (new ExpenseController())->store(); // Crear gasto (con subida de archivo)
+        break;
+    case 'delete_expense':
+        (new ExpenseController())->delete(); // Borrar gasto
+        break;
+
+
+    // Administración global
+    case 'admin_panel':
+        (new AdminController())->index(); // Dashboard general de admin
+        break;
+    
+    case 'admin_store_user':
+        (new AdminController())->createUser(); // (FALTA) Guardar usuario creado por admin
+        break;
+    case 'admin_update_user':
+        (new AdminController())->updateUser(); // (FALTA) Guardar edición
+        break;
     case 'admin_delete_user':
-        (new AdminController())->deleteUserAsAdmin();
+        (new AdminController())->deleteUser(); // Borrar usuario
         break;
 
     case 'admin_delete_plan':
-        (new AdminController())->deletePlanAsAdmin();
+        (new AdminController())->deletePlan(); // Borrar plan
         break;
 
-
     default:
-        echo "404 Not Found";
+        echo "<h1>404 Not Found</h1><p>La acción '{$action}' no existe.</p>";
         break;
 }

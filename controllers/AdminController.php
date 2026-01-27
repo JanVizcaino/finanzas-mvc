@@ -42,7 +42,7 @@ class AdminController
         require '../views/layout/footer.php';        
     }
 
-    public function deleteUserAsAdmin()
+    public function createUser()
     {
         $this->checkAdminAuth();
         
@@ -53,7 +53,52 @@ class AdminController
         header("Location: index.php?action=admin_panel");
     }
 
-    public function deletePlanAsAdmin()
+    public function storeUser()
+    {
+        $this->checkAdminAuth();
+        
+        if (isset($_GET['id'])) {
+            $this->adminModel->deleteUserAsAdmin($_GET['id']);
+        }
+        
+        header("Location: index.php?action=admin_panel");
+    }
+
+    public function editUser()
+    {
+        $this->checkAdminAuth();
+        
+        if (isset($_GET['id'])) {
+            $this->adminModel->deleteUserAsAdmin($_GET['id']);
+        }
+        
+        header("Location: index.php?action=admin_panel");
+    }
+
+    public function updateUser()
+    {
+        $this->checkAdminAuth();
+        
+        if (isset($_GET['id'])) {
+            $this->adminModel->deleteUserAsAdmin($_GET['id']);
+        }
+        
+        header("Location: index.php?action=admin_panel");
+    }
+
+
+    public function deleteUser()
+    {
+        $this->checkAdminAuth();
+        
+        if (isset($_GET['id'])) {
+            $this->adminModel->deleteUserAsAdmin($_GET['id']);
+        }
+        
+        header("Location: index.php?action=admin_panel");
+    }
+
+    public function deletePlan()
     {
         $this->checkAdminAuth();
         

@@ -9,15 +9,16 @@ class Plan
         $this->conn = $db;
     }
 
-    public function create($name, $userId)
+    public function create($name, $userId, $detail)
     {
         try {
             $this->conn->beginTransaction();
 
-            $query = "INSERT INTO " . $this->table . " (name, created_by) VALUES (:name, :created_by) RETURNING id";
+            $query = "INSERT INTO " . $this->table . " (name, created_by, detail) VALUES (:name, :created_by, :detail) RETURNING id";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":name", $name);
             $stmt->bindParam(":created_by", $userId);
+            $stmt->bindParam(":detail", $detail);
             $stmt->execute();
             $planId = $stmt->fetch(PDO::FETCH_COLUMN);
 
@@ -27,6 +28,33 @@ class Plan
             return true;
         } catch (Exception $e) {
             $this->conn->rollBack();
+            return false;
+        }
+    }
+
+public function update($planId, $name, $detail, $currency)
+    {
+        $query = "UPDATE " . $this->table . " 
+                  SET name = :name, 
+                      detail = :detail, 
+                      currency = :currency 
+                  WHERE id = :id";
+
+        try {
+            $stmt = $this->conn->prepare($query);
+
+            $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":detail", $detail);
+            $stmt->bindParam(":currency", $currency);
+            $stmt->bindParam(":id", $planId);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+
+        } catch (PDOException $e) {
+
             return false;
         }
     }
@@ -92,5 +120,22 @@ class Plan
         $stmt->bindParam(":plan_id", $planId);
         $stmt->bindParam(":user_id", $userId);
         return $stmt->execute();
+    }
+
+    public function delete($planId){
+        $query = "DELETE FROM financial_plans WHERE id = :plan_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":plan_id", $planId);
+        return $stmt->execute();
+    }
+
+    public function getPlanById($planId)
+    {
+        // Asegúrate de incluir 'currency' que arreglamos antes
+        $query = "SELECT * FROM financial_plans WHERE id = :plan_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":plan_id", $planId);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

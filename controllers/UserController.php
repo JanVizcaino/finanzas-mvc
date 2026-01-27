@@ -51,48 +51,5 @@ class UserController
         header("Location: index.php");
     }
 
-    public function storeMember()
-    {
-        $db = (new Database())->getConnection();
-        $user = new User($db);
-        $plan = new Plan($db);
 
-        $planId = $_POST['plan_id'];
-        $email = $_POST['email'];
-
-        $role = $plan->getUserRole($planId, $_SESSION['user_id']);
-        if ($role !== 'admin') die("No tienes permisos para añadir gente.");
-
-        $existingUser = $user->findByEmail($email);
-
-        if ($existingUser) {
-            $targetUserId = $existingUser['id'];
-
-            try {
-                $plan->addMember($planId, $targetUserId, 'member');
-            } catch (Exception $e) {
-            }
-
-            header("Location: index.php?action=view_plan&id=" . $planId);
-        } else {
-            die("Error: El usuario con el email <b>$email</b> no está registrado en el sistema. Pídele que se registre antes de añadirlo.");
-        }
-    }
-
-    public function removeMember()
-    {
-        $db = (new Database())->getConnection();
-        $plan = new Plan($db);
-
-        $planId = $_GET['plan_id'];
-        $targetUserId = $_GET['user_id'];
-
-        $role = $plan->getUserRole($planId, $_SESSION['user_id']);
-        if ($role !== 'admin') die("No tienes permisos.");
-
-        if ($targetUserId == $_SESSION['user_id']) die("No puedes borrarte a ti mismo si eres admin.");
-
-        $plan->removeMember($planId, $targetUserId);
-        header("Location: index.php?action=view_plan&id=" . $planId);
-    }
 }
