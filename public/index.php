@@ -7,6 +7,7 @@ require_once '../controllers/PlanController.php';
 require_once '../controllers/ExpenseController.php';
 require_once '../controllers/AdminController.php';
 
+
 $action = $_GET['action'] ?? 'login';
 
 // lista de acciones permitidas para usuarios NO logueados (Invitados)
@@ -70,9 +71,14 @@ switch ($action) {
     case 'store_expense':
         (new ExpenseController())->store(); // Crear gasto (con subida de archivo)
         break;
+    case 'update_expense':
+        (new ExpenseController())->update();
     case 'delete_expense':
         (new ExpenseController())->delete(); // Borrar gasto
         break;
+    case 'view_receipt':
+        (new ExpenseController())->viewReceipt();
+    break;
 
 
     // Administración global
@@ -81,7 +87,7 @@ switch ($action) {
         break;
     
     case 'admin_store_user':
-        (new AdminController())->createUser(); // (FALTA) Guardar usuario creado por admin
+        (new AdminController())->storeUser(); // (FALTA) Guardar usuario creado por admin
         break;
     case 'admin_update_user':
         (new AdminController())->updateUser(); // (FALTA) Guardar edición
