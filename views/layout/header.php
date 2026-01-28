@@ -22,37 +22,36 @@
 </head>
 
 <body class="bg-slate-50 text-slate-900 font-sans antialiased flex flex-col min-h-screen">
+    
     <?php if (isset($_SESSION['user_id'])): ?>
 
-        <nav class="bg-white shadow-sm h-16 px-6 flex justify-between items-center z-10 sticky top-0">
+        <nav class="bg-white shadow-sm h-16 px-4 sm:px-6 flex justify-between items-center z-10 sticky top-0">
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 shrink-0">
                 <a href="index.php?action=dashboard">
-                    <img src="../../assets/Blue.png" class="w-14 h-5" alt="Logo Finanzas">
+                    <img src="../../assets/Blue.png" class="w-auto h-5 sm:h-6 object-contain" alt="Logo Finanzas">
                 </a>
             </div>
 
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3 sm:gap-6">
 
-                <div class="flex items-center gap-4 text-text">
+                <div class="flex items-center gap-3 sm:gap-4 text-text">
                     <?php if ($_SESSION['role'] == 'admin' ): ?>
-
                         <a href="index.php?action=admin_panel" class="hover:text-primary transition cursor-pointer" title="Admin Panel">
                             <i class="fa-solid fa-user-shield text-lg"></i>
                         </a>
-
                     <?php endif; ?>
                 
-                    <a href="index.php?action=admin_panel" class="hover:text-primary transition cursor-pointer" title="Admin Panel">
+                    <a href="#" class="hover:text-primary transition cursor-pointer" title="Modo Oscuro (Demo)">
                         <i class="fa-solid fa-moon text-lg"></i>
                     </a>
                 </div>
 
-                <div class="h-4 w-px bg-secondary/30"></div>
+                <div class="hidden sm:block h-4 w-px bg-secondary/30"></div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3">
                     <div class="text-text">
-                        <i class="fa-solid fa-circle-user text-2xl"></i>
+                        <i class="fa-solid fa-circle-user text-xl sm:text-2xl"></i>
                     </div>
                     <div class="text-text text-base hidden sm:block">
                         <span class="font-normal">Hola, </span>
@@ -62,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="h-4 w-px bg-secondary/30"></div>
+                <div class="hidden sm:block h-4 w-px bg-secondary/30"></div>
 
                 <a href="index.php?action=logout" class="text-text hover:text-red-500 transition-colors cursor-pointer flex items-center gap-2" title="Cerrar Sesión">
                     <i class="fa-solid fa-right-from-bracket text-lg"></i>
@@ -73,4 +72,4 @@
 
     <?php endif; ?>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 flex-grow w-full">
