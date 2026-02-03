@@ -1,11 +1,9 @@
 <?php
 require_once '../config/Database.php';
 require_once '../models/User.php';
-require_once '../models/Plan.php';
 
 class UserController
 {
-
     public function login()
     {
         require '../views/layout/header.php';
@@ -16,16 +14,21 @@ class UserController
     {
         $db = (new Database())->getConnection();
         $user = new User($db);
-        $result = $user->login($_POST['email'], $_POST['password']);
+        
+        if (isset($_POST['username']) && isset($_POST['password'])) {
+            $result = $user->login($_POST['username'], $_POST['password']);
 
-        if ($result) {
-            $_SESSION['user_id'] = $result['id'];
-            $_SESSION['username'] = $result['username'];
-            $_SESSION['role'] = $result['role'];
-            header("Location: index.php?action=dashboard");
-        } else {
-            echo "Credenciales incorrectas";
+            if ($result) {
+                $_SESSION['user_id'] = $result['id'];
+                $_SESSION['username'] = $result['username'];
+                $_SESSION['role'] = $result['role'];
+                header("Location: index.php?action=dashboard");
+                exit;
+            }
         }
+        
+        // Si falla
+        header("Location: index.php?action=login&error=1");
     }
 
     public function register()
@@ -38,10 +41,11 @@ class UserController
     {
         $db = (new Database())->getConnection();
         $user = new User($db);
-        if ($user->register($_POST['username'], $_POST['email'], $_POST['password'])) {
+        
+        if ($user->register($_POST['username'], $_POST['password'])) {
             header("Location: index.php?action=login");
         } else {
-            echo "Error registrando.";
+            echo "Error registrando usuario (quizás el nombre ya existe).";
         }
     }
 
@@ -50,6 +54,5 @@ class UserController
         session_destroy();
         header("Location: index.php");
     }
-
-
 }
+?>

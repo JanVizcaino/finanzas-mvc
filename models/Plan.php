@@ -32,7 +32,7 @@ class Plan
         }
     }
 
-public function update($planId, $name, $detail, $currency)
+    public function update($planId, $name, $detail, $currency)
     {
         $query = "UPDATE " . $this->table . " 
                   SET name = :name, 
@@ -54,7 +54,6 @@ public function update($planId, $name, $detail, $currency)
             return false;
 
         } catch (PDOException $e) {
-
             return false;
         }
     }
@@ -94,9 +93,16 @@ public function update($planId, $name, $detail, $currency)
 
     public function getMembers($planId)
     {
-        $query = "SELECT u.id, u.username, u.email, pm.role FROM users u 
+        // CORRECCIÓN AQUÍ:
+        // 1. Quitamos u.connection_email (que ya no existe en users)
+        // 2. Añadimos pm.notification_email (que ahora está en plan_members)
+        // 3. Lo renombramos 'connection_email' en el alias para que tu vista no se rompa
+        
+        $query = "SELECT u.id, u.username, pm.notification_email AS connection_email, pm.role 
+                  FROM users u 
                   JOIN plan_members pm ON u.id = pm.user_id 
                   WHERE pm.plan_id = :plan_id";
+                  
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
         $stmt->execute();
@@ -131,11 +137,58 @@ public function update($planId, $name, $detail, $currency)
 
     public function getPlanById($planId)
     {
-        // Asegúrate de incluir 'currency' que arreglamos antes
         $query = "SELECT * FROM financial_plans WHERE id = :plan_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // --- FUNCIONES PARA NOTIFICACIONES (AÑADIR ESTAS SI NO LAS TIENES) ---
+
+    public function getMemberDetails($planId, $userId)
+    {
+        $query = "SELECT role, notification_email, terms_accepted 
+                  FROM plan_members 
+                  WHERE plan_id = :plan_id AND user_id = :user_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":plan_id", $planId);
+        $stmt->bindParam(":user_id", $userId);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateMemberSubscription($planId, $userId, $email, $terms)
+    {
+        $query = "UPDATE plan_members 
+                  SET notification_email = :email, terms_accepted = :terms 
+                  WHERE plan_id = :plan_id AND user_id = :user_id";
+        try {
+            $stmt = $this->conn->prepare($query);
+            $emailVal = !empty($email) ? $email : null;
+            $stmt->bindParam(":email", $emailVal);
+            $stmt->bindParam(":terms", $terms, PDO::PARAM_BOOL);
+            $stmt->bindParam(":plan_id", $planId);
+            $stmt->bindParam(":user_id", $userId);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function getSubscribers($planId)
+    {
+        $query = "SELECT notification_email 
+                  FROM plan_members 
+                  WHERE plan_id = :plan_id 
+                  AND notification_email IS NOT NULL 
+                  AND notification_email != '' 
+                  AND terms_accepted = TRUE";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":plan_id", $planId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
 }
+?>

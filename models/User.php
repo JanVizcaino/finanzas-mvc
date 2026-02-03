@@ -9,18 +9,17 @@ class User
         $this->conn = $db;
     }
 
-    // --- FUNCIONES PÚBLICAS (Login / Registro normal) ---
+    // --- FUNCIONES PÚBLICAS (Login / Registro) ---
 
-    public function register($username, $email, $password)
+    // REGISTRO: Solo Username y Password
+    public function register($username, $password)
     {
-        // El registro normal asigna rol 'user' por defecto en la BBDD
-        $query = "INSERT INTO " . $this->table . " (username, email, password) VALUES (:username, :email, :password) RETURNING id";
+        $query = "INSERT INTO " . $this->table . " (username, password) VALUES (:username, :password) RETURNING id";
         $stmt = $this->conn->prepare($query);
         
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         
         $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":email", $email);
         $stmt->bindParam(":password", $password_hash);
 
         if ($stmt->execute()) {
@@ -29,11 +28,12 @@ class User
         return false;
     }
 
-    public function login($email, $password)
+    // LOGIN: Autenticación por Username
+    public function login($username, $password)
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE email = :email";
+        $query = "SELECT * FROM " . $this->table . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":username", $username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -43,11 +43,12 @@ class User
         return false;
     }
 
-    public function findByEmail($email)
+    // Validar si existe usuario (útil para no duplicar nombres)
+    public function findByUsername($username)
     {
-        $query = "SELECT id, username, role FROM " . $this->table . " WHERE email = :email";
+        $query = "SELECT id, username, role FROM " . $this->table . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":username", $username);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -62,79 +63,58 @@ class User
     }
 
     // --- FUNCIONES DE ADMINISTRACIÓN (CRUD) ---
-
-    // 1. CREAR (Permite definir el rol explícitamente)
-    public function create($username, $email, $passwordHash, $role)
+    
+    // 1. CREAR (Limpio: sin email)
+    public function create($username, $passwordHash, $role)
     {
-        $query = "INSERT INTO " . $this->table . " (username, email, password, role) 
-                  VALUES (:username, :email, :password, :role)";
+        $query = "INSERT INTO " . $this->table . " (username, password, role) 
+                  VALUES (:username, :password, :role)";
 
         try {
             $stmt = $this->conn->prepare($query);
-
-            // Limpieza básica
-            $username = htmlspecialchars(strip_tags($username));
-            $email = htmlspecialchars(strip_tags($email));
-            $role = htmlspecialchars(strip_tags($role));
-
             $stmt->bindParam(":username", $username);
-            $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":password", $passwordHash); // Ya viene hasheada del controller
+            $stmt->bindParam(":password", $passwordHash);
             $stmt->bindParam(":role", $role);
-
             return $stmt->execute();
-
-        } catch (PDOException $e) {
-            return false;
-        }
+        } catch (PDOException $e) { return false; }
     }
-
-    // 2. ACTUALIZAR (Maneja cambio de password opcional)
-    public function update($id, $username, $email, $role, $passwordHash = null)
+    
+    // 2. ACTUALIZAR (Limpio: sin email)
+    public function update($id, $username, $role, $passwordHash = null)
     {
-        // Si $passwordHash tiene valor, actualizamos la contraseña. Si es null, no.
-        if ($passwordHash) {
+         if ($passwordHash) {
             $query = "UPDATE " . $this->table . " 
-                      SET username = :username, email = :email, role = :role, password = :password 
+                      SET username = :username, role = :role, password = :password 
                       WHERE id = :id";
         } else {
             $query = "UPDATE " . $this->table . " 
-                      SET username = :username, email = :email, role = :role 
+                      SET username = :username, role = :role 
                       WHERE id = :id";
         }
 
-        try {
+         try {
             $stmt = $this->conn->prepare($query);
-
-            // Bindings comunes
             $stmt->bindParam(":username", $username);
-            $stmt->bindParam(":email", $email);
             $stmt->bindParam(":role", $role);
             $stmt->bindParam(":id", $id);
-
-            // Binding condicional
+            
             if ($passwordHash) {
                 $stmt->bindParam(":password", $passwordHash);
             }
-
+            
             return $stmt->execute();
-        } catch (PDOException $e) {
-            return false;
-        }
+        } catch (PDOException $e) { return false; }
     }
 
     // 3. ELIMINAR
     public function delete($id)
     {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
-        
         try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":id", $id);
             return $stmt->execute();
-        } catch (PDOException $e) {
-            return false;
-        }
+        } catch (PDOException $e) { return false; }
     }
 }
 ?>

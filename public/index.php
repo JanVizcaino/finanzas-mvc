@@ -22,6 +22,8 @@ switch ($action) {
 
     // Gestion de usuarios
     case 'login':
+        session_unset();
+        session_destroy();
         (new UserController())->login(); // Muestra formulario login
         break;
     case 'authenticate':
@@ -36,7 +38,9 @@ switch ($action) {
     case 'logout':
         (new UserController())->logout(); // Cierra sesión
         break;
-
+    case 'update_plan_subscription':
+        (new PlanController())->updateSubscription();
+    break;
 
     // Gestion de planes
     case 'dashboard':

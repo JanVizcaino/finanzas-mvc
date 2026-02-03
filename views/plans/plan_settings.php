@@ -1,17 +1,14 @@
-<?php 
-    // Variable auxiliar
-    $isAdmin = ($currentUserRole === 'admin'); 
-    
-    // Configuración de columnas para ESCRITORIO (md:...)
-    // En móvil usaremos Flexbox, así que esto solo aplica a pantallas grandes.
-    $gridColsClass = $isAdmin ? 'md:grid-cols-5' : 'md:grid-cols-4';
+<?php
+$isAdmin = ($currentUserRole === 'admin');
+
+$gridColsClass = $isAdmin ? 'md:grid-cols-5' : 'md:grid-cols-4';
 ?>
 
 <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
 
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center w-full md:w-auto">
-            <a href="index.php?action=dashboard" class="flex items-center gap-2 text-secondary hover:text-primary transition bg-white px-3 py-1.5 rounded-md shadow-sm border border-transparent hover:border-secondary/20">
+            <a href="index.php?action=dashboard" class="flex items-center gap-2 text-secondary hover:text-primary transition bg-background px-3 py-1.5 rounded-md shadow-sm border border-transparent hover:border-secondary/20">
                 <i class="fa-solid fa-arrow-left text-xs"></i>
                 <span class="text-sm font-medium">Volver</span>
             </a>
@@ -36,6 +33,50 @@
         </a>
     </div>
 
+    <div class="bg-secondary/5 border border-secondary/20 rounded-lg p-4 mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <h3 class="text-text font-medium">Notificaciones de este Plan</h3>
+                <p class="text-secondary text-xs">Configura dónde recibir alertas para <b>este plan específico</b>.</p>
+            </div>
+            <button type="button" onclick="toggleEmailDropdown()" class="bg-background border border-secondary/30 text-text px-4 py-2 rounded-md text-sm font-medium hover:bg-secondary/5 transition flex items-center gap-2">
+                <i class="fa-solid fa-envelope"></i>
+                Configurar Alertas
+                <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200" id="emailChevron"></i>
+            </button>
+        </div>
+
+        <div id="emailDropdown" class="hidden mt-4 pt-4 border-t border-secondary/10">
+            <form action="index.php?action=update_plan_subscription" method="POST" class="flex flex-col gap-4">
+                <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-text text-xs font-semibold uppercase">Correo para Notificaciones</label>
+                    <input type="email" name="notification_email"
+                        value="<?= htmlspecialchars($currentMemberData['notification_email'] ?? '') ?>"
+                        placeholder="ejemplo@correo.com"
+                        class="w-full h-10 px-3 bg-background border border-secondary/30 rounded-md text-sm focus:ring-1 focus:ring-primary outline-none">
+                    <p class="text-[10px] text-secondary">Deja esto vacío si quieres desactivar las notificaciones para este plan.</p>
+                </div>
+
+                <div class="flex items-start gap-3">
+                    <input type="checkbox" name="terms_accepted" id="terms" required
+                        class="mt-1 accent-primary"
+                        <?= ($currentMemberData['terms_accepted'] ?? false) ? 'checked' : '' ?>>
+                    <label for="terms" class="text-secondary text-xs leading-relaxed">
+                        Acepto recibir correos automáticos relacionados con los gastos de <strong><?= htmlspecialchars($plan['name']) ?></strong>.
+                    </label>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md text-xs hover:opacity-90 transition">
+                        Guardar Preferencias
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <form action="index.php?action=update_plan" id="settingsForm" method="POST" class="flex flex-col gap-4 mb-8">
         <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
         <h2 class="text-text text-base font-medium">Información General</h2>
@@ -45,17 +86,16 @@
                 <label class="text-text text-sm font-medium">Nombre del Plan</label>
                 <input type="text" name="name" value="<?= htmlspecialchars($plan['name']) ?>"
                     <?= $isAdmin ? '' : 'disabled' ?>
-                    class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text shadow-sm focus:outline-none focus:border-primary disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:border-gray-200">
+                    class="w-full h-10 px-3 bg-background border border-secondary/30 rounded-md text-sm text-text shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed">
             </div>
             <div class="flex-1 flex flex-col gap-1.5">
                 <label class="text-text text-sm font-medium">Moneda</label>
                 <div class="relative">
                     <select name="currency" <?= $isAdmin ? '' : 'disabled' ?>
-                        class="w-full h-10 pl-3 pr-10 bg-white border border-secondary/30 rounded-md text-sm text-text shadow-sm appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:border-gray-200">
+                        class="w-full h-10 pl-3 pr-10 bg-background border border-secondary/30 rounded-md text-sm text-text shadow-sm appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed">
                         <option value="EUR" <?= (($plan['currency'] ?? 'EUR') == 'EUR') ? 'selected' : '' ?>>EUR</option>
                         <option value="USD" <?= (($plan['currency'] ?? '') == 'USD') ? 'selected' : '' ?>>USD</option>
                     </select>
-
                     <div class="absolute right-3 inset-y-0 flex items-center pointer-events-none text-secondary">
                         <i class="fa-solid fa-chevron-down text-xs"></i>
                     </div>
@@ -65,8 +105,8 @@
 
         <div class="flex flex-col gap-1.5">
             <label class="text-text text-sm font-medium">Descripción</label>
-            <textarea name="detail" <?= $isAdmin ? '' : 'disabled' ?> 
-                class="w-full p-3 bg-white border border-secondary/30 rounded-md text-sm text-text shadow-sm h-24 resize-none focus:outline-none focus:border-primary disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:border-gray-200"><?= htmlspecialchars($plan['detail'] ?? '') ?></textarea>
+            <textarea name="detail" <?= $isAdmin ? '' : 'disabled' ?>
+                class="w-full p-3 bg-background border border-secondary/30 rounded-md text-sm text-text shadow-sm h-24 resize-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"><?= htmlspecialchars($plan['detail'] ?? '') ?></textarea>
         </div>
     </form>
 
@@ -81,7 +121,7 @@
             <?php endif; ?>
         </div>
 
-        <div class="bg-white rounded-md shadow-sm flex flex-col overflow-hidden border border-secondary/10">
+        <div class="bg-background rounded-md shadow-sm flex flex-col overflow-hidden border border-secondary/10">
 
             <div class="hidden md:grid <?= $gridColsClass ?> gap-4 px-6 py-3 border-b border-secondary/10 bg-secondary/5">
                 <div class="text-left text-text text-sm font-semibold col-span-2">USUARIO</div>
@@ -101,22 +141,22 @@
                         </div>
                         <div class="flex flex-col min-w-0">
                             <span class="text-text text-base font-medium truncate"><?= htmlspecialchars($member['username']) ?></span>
-                            <span class="text-secondary text-xs truncate"><?= htmlspecialchars($member['email'] ?? 'Sin email') ?></span>
+                            <span class="text-secondary text-xs truncate"><?= htmlspecialchars($member['connection_email'] ?? 'Sin email') ?></span>
                         </div>
-                        
+
                         <?php if ($isAdmin && $member['role'] !== 'admin'): ?>
-                             <div class="md:hidden absolute top-4 right-4">
+                            <div class="md:hidden absolute top-4 right-4">
                                 <a href="index.php?action=remove_member&user_id=<?= $member['id'] ?>&plan_id=<?= $plan['id'] ?>"
-                                   onclick="return confirm('¿Expulsar usuario?')"
-                                   class="w-8 h-8 flex justify-center items-center bg-primary/10 rounded-full text-primary">
+                                    onclick="return confirm('¿Expulsar usuario?')"
+                                    class="w-8 h-8 flex justify-center items-center bg-alert/10 rounded-full text-alert">
                                     <i class="fa-solid fa-trash text-xs"></i>
                                 </a>
-                             </div>
+                            </div>
                         <?php endif; ?>
                     </div>
 
                     <div class="flex md:contents w-full justify-between items-center pl-[52px] md:pl-0 mt-1 md:mt-0">
-                        
+
                         <div class="flex justify-start md:justify-center">
                             <?php if ($member['role'] === 'admin'): ?>
                                 <div class="px-2.5 py-0.5 bg-primary/10 rounded-full flex items-center gap-1.5">
@@ -144,7 +184,7 @@
                             <?php if ($member['role'] !== 'admin'): ?>
                                 <a href="index.php?action=remove_member&user_id=<?= $member['id'] ?>&plan_id=<?= $plan['id'] ?>"
                                     onclick="return confirm('¿Expulsar usuario?')"
-                                    class="w-8 h-8 flex justify-center items-center bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white transition cursor-pointer">
+                                    class="w-8 h-8 flex justify-center items-center bg-alert/10 rounded-full text-alert hover:bg-alert hover:text-white transition cursor-pointer">
                                     <i class="fa-solid fa-trash text-xs"></i>
                                 </a>
                             <?php else: ?>
@@ -166,7 +206,7 @@
         <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 sm:gap-5 mt-6 mb-12">
             <a href="index.php?action=delete_plan&id=<?= $plan['id'] ?>"
                 onclick="return confirm('¿Estás seguro? Esto borrará el plan y todos sus gastos.')"
-                class="h-10 px-4 bg-white border border-secondary/30 hover:bg-alert/5 hover:border-alert hover:text-alert transition rounded-md flex items-center justify-center gap-2 text-secondary text-sm font-medium cursor-pointer w-full sm:w-auto">
+                class="h-10 px-4 bg-transparent border border-secondary/30 hover:bg-alert/5 hover:border-alert hover:text-alert transition rounded-md flex items-center justify-center gap-2 text-secondary text-sm font-medium cursor-pointer w-full sm:w-auto">
                 <i class="fa-solid fa-trash"></i>
                 Eliminar Plan
             </a>
@@ -181,12 +221,12 @@
 </div>
 
 <div id="memberSlideOverBackdrop" class="fixed inset-0 z-50 invisible">
-    <div id="memberSlideOverOverlay" onclick="closeMemberSlideOver()" class="absolute inset-0 bg-gray-900/50 opacity-0 transition-opacity duration-300 ease-in-out"></div>
-    
+    <div id="memberSlideOverOverlay" onclick="closeMemberSlideOver()" class="absolute inset-0 bg-text/50 opacity-0 transition-opacity duration-300 ease-in-out"></div>
+
     <div class="fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10 pointer-events-none">
-        <div id="memberSlideOverPanel" class="pointer-events-auto w-screen sm:max-w-md transform translate-x-full transition-transform duration-300 ease-in-out bg-white shadow-xl flex flex-col h-full">
-            
-            <div class="h-16 px-4 sm:px-8 py-3.5 border-b border-secondary/20 flex justify-between items-center bg-white flex-shrink-0">
+        <div id="memberSlideOverPanel" class="pointer-events-auto w-screen sm:max-w-md transform translate-x-full transition-transform duration-300 ease-in-out bg-background shadow-xl flex flex-col h-full">
+
+            <div class="h-16 px-4 sm:px-8 py-3.5 border-b border-secondary/20 flex justify-between items-center bg-background flex-shrink-0">
                 <h1 class="text-text text-xl font-bold">Añadir Miembro</h1>
                 <button onclick="closeMemberSlideOver()" class="w-10 h-10 flex justify-center items-center text-secondary hover:text-text transition cursor-pointer">
                     <i class="fa-solid fa-xmark text-lg"></i>
@@ -196,14 +236,14 @@
             <form id="addMemberForm" action="index.php?action=store_member" method="POST" class="flex-1 px-4 sm:px-8 py-6 flex flex-col gap-5 overflow-y-auto">
                 <input type="hidden" name="plan_id" value="<?= $plan['id'] ?>">
                 <div class="flex flex-col gap-2">
-                    <label class="text-text text-sm font-medium">Correo Electrónico*</label>
-                    <input type="email" name="email" placeholder="ejemplo@email.com" required
-                        class="w-full h-10 px-3 bg-white border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 shadow-sm">
+                    <label class="text-text text-sm font-medium">Nombre de Usuario*</label>
+                    <input type="text" name="username" placeholder="Ej. JuanPerez" required
+                        class="w-full h-10 px-3 bg-background border border-secondary/30 rounded-md text-sm text-text focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-secondary/50 shadow-sm">
                 </div>
             </form>
 
-            <div class="h-auto sm:h-20 px-4 sm:px-8 py-4 sm:py-2.5 border-t border-secondary/20 flex flex-col-reverse sm:flex-row justify-end items-center gap-3 sm:gap-4 bg-white flex-shrink-0">
-                <button type="button" onclick="closeMemberSlideOver()" class="w-full sm:w-auto h-10 px-4 bg-white border border-secondary/30 hover:bg-secondary/5 rounded-md flex items-center justify-center text-secondary text-sm font-medium transition cursor-pointer">
+            <div class="h-auto sm:h-20 px-4 sm:px-8 py-4 sm:py-2.5 border-t border-secondary/20 flex flex-col-reverse sm:flex-row justify-end items-center gap-3 sm:gap-4 bg-background flex-shrink-0">
+                <button type="button" onclick="closeMemberSlideOver()" class="w-full sm:w-auto h-10 px-4 bg-transparent border border-secondary/30 hover:bg-secondary/5 rounded-md flex items-center justify-center text-secondary text-sm font-medium transition cursor-pointer">
                     Cancelar
                 </button>
                 <button type="submit" form="addMemberForm" class="w-full sm:w-auto h-10 px-4 bg-primary hover:opacity-90 rounded-md flex items-center justify-center gap-2 text-white text-sm font-medium transition shadow-sm cursor-pointer">
@@ -216,7 +256,6 @@
 </div>
 
 <script>
-    // El script se mantiene igual, funciona bien
     function openMemberSlideOver() {
         const backdrop = document.getElementById('memberSlideOverBackdrop');
         const overlay = document.getElementById('memberSlideOverOverlay');
@@ -240,5 +279,17 @@
         setTimeout(() => {
             backdrop.classList.add('invisible');
         }, 300);
+    }
+
+    function toggleEmailDropdown() {
+        const dropdown = document.getElementById('emailDropdown');
+        const chevron = document.getElementById('emailChevron');
+        dropdown.classList.toggle('hidden');
+
+        if (dropdown.classList.contains('hidden')) {
+            chevron.classList.remove('rotate-180');
+        } else {
+            chevron.classList.add('rotate-180');
+        }
     }
 </script>

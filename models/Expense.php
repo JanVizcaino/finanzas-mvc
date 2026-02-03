@@ -20,10 +20,11 @@ class Expense
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create($planId, $userId, $title, $amount, $category, $receiptPath = null, $detail)
+// Cambiamos el orden: $detail antes, $receiptPath al final
+    public function create($planId, $userId, $title, $amount, $category, $detail, $receiptPath = null)
     {
         $query = "INSERT INTO " . $this->table . " (plan_id, user_id, title, amount, category, receipt_path, detail) 
-                VALUES (:plan_id, :user_id, :title, :amount, :category, :receipt_path, :detail)";
+                  VALUES (:plan_id, :user_id, :title, :amount, :category, :receipt_path, :detail)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -32,12 +33,11 @@ class Expense
         $stmt->bindParam(":title", $title);
         $stmt->bindParam(":amount", $amount);
         $stmt->bindParam(":category", $category);
-        $stmt->bindParam(":receipt_path", $receiptPath);
         $stmt->bindParam(":detail", $detail);
+        $stmt->bindParam(":receipt_path", $receiptPath);
 
         return $stmt->execute();
     }
-
     // En models/Expense.php
 
     // 1. Necesitas este método para obtener la info actual antes de editar
