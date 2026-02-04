@@ -94,8 +94,6 @@
                             <button onclick="editUser(this)"
                                 data-id="<?= $user['id'] ?>"
                                 data-username="<?= htmlspecialchars($user['username']) ?>"
-                                /* CAMBIO: Cargamos connection_email en el data-email para el formulario */
-                                data-email="<?= htmlspecialchars($user['connection_email'] ?? '') ?>"
                                 data-role="<?= $user['role'] ?>"
                                 class="w-8 h-8 flex justify-center items-center bg-secondary/10 rounded-full text-secondary hover:bg-primary hover:text-white transition cursor-pointer"
                                 title="Editar Usuario">
@@ -187,11 +185,6 @@
                 </div>
                 
                 <div class="flex flex-col gap-2">
-                    <label class="text-text text-sm font-medium">Correo de Conexión (Opcional)</label>
-                    <input type="email" name="email" id="emailInput" class="w-full h-10 px-3 bg-background border border-secondary/30 rounded-md text-text focus:border-primary shadow-sm">
-                </div>
-                
-                <div class="flex flex-col gap-2">
                     <label class="text-text text-sm font-medium">Contraseña</label>
                     <input type="password" name="password" id="passwordInput" class="w-full h-10 px-3 bg-background border border-secondary/30 rounded-md text-text focus:border-primary shadow-sm">
                     <p id="passwordHint" class="text-xs text-secondary hidden">Dejar en blanco para mantener actual.</p>
@@ -230,7 +223,6 @@
     const overlay = document.getElementById('userSlideOverOverlay');
     const panel = document.getElementById('userSlideOverPanel');
 
-    // MODO CREAR
     function openUserSlideOver() {
         userForm.reset();
         userForm.action = "index.php?action=admin_store_user";
@@ -238,23 +230,19 @@
         userSubmitBtn.textContent = "Crear Usuario";
         document.getElementById('userIdInput').value = "";
         
-        // Contraseña requerida al crear
         passwordInput.required = true;
         passwordHint.classList.add('hidden');
         
         showSlideOver();
     }
 
-    // MODO EDITAR
     function editUser(btn) {
         const id = btn.dataset.id;
         const username = btn.dataset.username;
-        const email = btn.dataset.email; // Lee el connection_email del botón
         const role = btn.dataset.role;
 
         document.getElementById('userIdInput').value = id;
         document.getElementById('usernameInput').value = username;
-        document.getElementById('emailInput').value = email;
         document.getElementById('roleInput').value = role;
         
         passwordInput.value = "";
@@ -262,7 +250,6 @@
         userTitle.textContent = "Editar Usuario";
         userSubmitBtn.textContent = "Actualizar Usuario";
         
-        // Contraseña opcional al editar
         passwordInput.required = false;
         passwordHint.classList.remove('hidden');
 

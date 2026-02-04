@@ -16,12 +16,13 @@ class AdminController
         $this->userModel = new User($this->db);
     }
 
-    private function checkAdminAuth() {
+    private function checkAdminAuth()
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-            header("Location: index.php?action=dashboard"); 
+            header("Location: index.php?action=dashboard");
             exit;
         }
     }
@@ -31,24 +32,25 @@ class AdminController
         $this->checkAdminAuth();
         $users = $this->adminModel->getAllUsers();
         $plans = $this->adminModel->getAllPlans();
-        
+
         require '../views/layout/header.php';
         require '../views/admin/dashboard.php';
-        require '../views/layout/footer.php';        
+        require '../views/layout/footer.php';
     }
 
     public function storeUser()
     {
         $this->checkAdminAuth();
-        
+
         if (isset($_POST['username'], $_POST['password'], $_POST['role'])) {
             $username = trim($_POST['username']);
             $password = $_POST['password'];
             $role = $_POST['role'];
 
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-$this->userModel->create($username, $passwordHash, $role);        }
-        
+            $this->userModel->create($username, $passwordHash, $role);
+        }
+
         header("Location: index.php?action=admin_panel");
         exit;
     }
@@ -56,12 +58,12 @@ $this->userModel->create($username, $passwordHash, $role);        }
     public function updateUser()
     {
         $this->checkAdminAuth();
-        
+
         if (isset($_POST['id'], $_POST['username'], $_POST['role'])) {
             $id = $_POST['id'];
             $username = trim($_POST['username']);
             $role = $_POST['role'];
-            
+
             $passwordHash = null;
             if (!empty($_POST['password'])) {
                 $passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -69,7 +71,7 @@ $this->userModel->create($username, $passwordHash, $role);        }
 
             $this->userModel->update($id, $username, $role, $passwordHash);
         }
-        
+
         header("Location: index.php?action=admin_panel");
         exit;
     }
@@ -98,4 +100,3 @@ $this->userModel->create($username, $passwordHash, $role);        }
         exit;
     }
 }
-?>

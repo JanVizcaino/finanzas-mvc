@@ -1,0 +1,46 @@
+[2026-02-04 16:51:16] Envio a: jan.vizbb@gmail.com
+Payload: {"event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: sfd","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+ERROR cURL: Failed to connect to localhost port 5678 after 0 ms: Could not connect to server
+-----------------------------------
+[2026-02-04 16:53:49] Envio a: jan.vizbb@gmail.com
+Payload: {"event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: asd","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+HTTP Code: 404 | Respuesta: {"code":404,"message":"The requested webhook \"odin_mvc\" is not registered.","hint":"Click the 'Execute workflow' button on the canvas, then try again. (In test mode, the webhook only works for one call after you click this button)"}
+-----------------------------------
+[2026-02-04 16:55:42] Envio a: jan.vizbb@gmail.com
+Payload: {"event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: ADAS","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+HTTP Code: 404 | Respuesta: <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST //webhook/odin_mvc</pre>
+</body>
+</html>
+
+-----------------------------------
+[2026-02-04 16:57:48] Envio a: jan.vizbb@gmail.com
+Payload: {"event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: ads","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+HTTP Code: 404 | Respuesta: {"code":404,"message":"The requested webhook \"POST odin_mvc\" is not registered.","hint":"The workflow must be active for a production URL to run successfully. You can activate the workflow using the toggle in the top-right of the editor. Note that unlike test URL calls, production URL calls aren't shown on the canvas (only in the executions list)"}
+-----------------------------------
+[2026-02-04 16:58:52] Envio a: jan.vizbb@gmail.com
+Payload: {"event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: qwe","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+HTTP Code: 200 | Respuesta: {"message":"Workflow was started"}
+-----------------------------------
+[2026-02-04 17:00:03] Envio a: jan.vizbb@gmail.com
+Payload: {"event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: adda","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>23.00\u20ac<\/b> en la categor\u00eda Transporte.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"23","creator":"jan2"}}
+HTTP Code: 200 | Respuesta: {"message":"Workflow was started"}
+-----------------------------------
+[2026-02-04 17:02:04] Envio a: jan.vizbb@gmail.com
+Payload: {"type":"Email","event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: ads","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+HTTP Code: 200 | Respuesta: {"message":"Workflow was started"}
+-----------------------------------
+[2026-02-04 17:03:43] Envio a: jan.vizbb@gmail.com
+Payload: {"type":"Email","event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: ad","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>12.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"12","creator":"jan2"}}
+HTTP Code: 200 | Respuesta: {"message":"Workflow was started"}
+-----------------------------------
+[2026-02-04 17:04:50] Envio a: jan.vizbb@gmail.com
+Payload: {"type":"Email","event":"new_expense","recipient_email":"jan.vizbb@gmail.com","template_title":"Nuevo Gasto: adsas","template_description":"Hola, <b>jan2<\/b> acaba de registrar un gasto de <b>123.00\u20ac<\/b> en la categor\u00eda Comida.","template_link":"http:\/\/localhost\/index.php?action=view_plan&id=1","raw_data":{"plan_id":"1","amount":"123","creator":"jan2"}}
+HTTP Code: 200 | Respuesta: {"message":"Workflow was started"}
+-----------------------------------

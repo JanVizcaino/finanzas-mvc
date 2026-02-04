@@ -9,12 +9,8 @@ class Admin
     }
 
     public function getAllUsers()
-        {
-            // Hacemos LEFT JOIN para traer los usuarios aunque no tengan plan.
-            // Usamos STRING_AGG para juntar todos los emails de sus diferentes planes en una sola cadena.
-            // COALESCE asegura que si no hay emails, no devuelva null.
-            
-            $query = "SELECT 
+    {
+        $query = "SELECT 
                         u.id, 
                         u.username, 
                         u.role,
@@ -24,10 +20,10 @@ class Admin
                     GROUP BY u.id, u.username, u.role
                     ORDER BY u.id ASC";
 
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getAllPlans()
     {
@@ -56,6 +52,4 @@ class Admin
         $stmt->bindParam(":planId", $planId);
         return $stmt->execute();
     }
-
 }
-?>

@@ -52,7 +52,6 @@ class Plan
                 return true;
             }
             return false;
-
         } catch (PDOException $e) {
             return false;
         }
@@ -93,16 +92,11 @@ class Plan
 
     public function getMembers($planId)
     {
-        // CORRECCIÓN AQUÍ:
-        // 1. Quitamos u.connection_email (que ya no existe en users)
-        // 2. Añadimos pm.notification_email (que ahora está en plan_members)
-        // 3. Lo renombramos 'connection_email' en el alias para que tu vista no se rompa
-        
         $query = "SELECT u.id, u.username, pm.notification_email AS connection_email, pm.role 
                   FROM users u 
                   JOIN plan_members pm ON u.id = pm.user_id 
                   WHERE pm.plan_id = :plan_id";
-                  
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
         $stmt->execute();
@@ -128,7 +122,8 @@ class Plan
         return $stmt->execute();
     }
 
-    public function delete($planId){
+    public function delete($planId)
+    {
         $query = "DELETE FROM financial_plans WHERE id = :plan_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
@@ -144,17 +139,19 @@ class Plan
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // --- FUNCIONES PARA NOTIFICACIONES (AÑADIR ESTAS SI NO LAS TIENES) ---
-
     public function getMemberDetails($planId, $userId)
     {
-        $query = "SELECT role, notification_email, terms_accepted 
-                  FROM plan_members 
-                  WHERE plan_id = :plan_id AND user_id = :user_id";
+       
+        $query = "SELECT * FROM plan_members 
+                  WHERE plan_id = :plan_id 
+                  AND user_id = :user_id 
+                  LIMIT 1";
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":plan_id", $planId);
         $stmt->bindParam(":user_id", $userId);
         $stmt->execute();
+
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -191,4 +188,3 @@ class Plan
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }
-?>

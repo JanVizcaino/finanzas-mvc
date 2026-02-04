@@ -14,7 +14,7 @@ class UserController
     {
         $db = (new Database())->getConnection();
         $user = new User($db);
-        
+
         if (isset($_POST['username']) && isset($_POST['password'])) {
             $result = $user->login($_POST['username'], $_POST['password']);
 
@@ -26,8 +26,7 @@ class UserController
                 exit;
             }
         }
-        
-        // Si falla
+
         header("Location: index.php?action=login&error=1");
     }
 
@@ -41,7 +40,7 @@ class UserController
     {
         $db = (new Database())->getConnection();
         $user = new User($db);
-        
+
         if ($user->register($_POST['username'], $_POST['password'])) {
             header("Location: index.php?action=login");
         } else {
@@ -55,4 +54,3 @@ class UserController
         header("Location: index.php");
     }
 }
-?>

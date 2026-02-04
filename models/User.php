@@ -8,17 +8,13 @@ class User
     {
         $this->conn = $db;
     }
-
-    // --- FUNCIONES PÚBLICAS (Login / Registro) ---
-
-    // REGISTRO: Solo Username y Password
     public function register($username, $password)
     {
         $query = "INSERT INTO " . $this->table . " (username, password) VALUES (:username, :password) RETURNING id";
         $stmt = $this->conn->prepare($query);
-        
+
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
-        
+
         $stmt->bindParam(":username", $username);
         $stmt->bindParam(":password", $password_hash);
 
@@ -28,7 +24,6 @@ class User
         return false;
     }
 
-    // LOGIN: Autenticación por Username
     public function login($username, $password)
     {
         $query = "SELECT * FROM " . $this->table . " WHERE username = :username";
@@ -43,7 +38,6 @@ class User
         return false;
     }
 
-    // Validar si existe usuario (útil para no duplicar nombres)
     public function findByUsername($username)
     {
         $query = "SELECT id, username, role FROM " . $this->table . " WHERE username = :username";
@@ -62,9 +56,6 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // --- FUNCIONES DE ADMINISTRACIÓN (CRUD) ---
-    
-    // 1. CREAR (Limpio: sin email)
     public function create($username, $passwordHash, $role)
     {
         $query = "INSERT INTO " . $this->table . " (username, password, role) 
@@ -76,13 +67,14 @@ class User
             $stmt->bindParam(":password", $passwordHash);
             $stmt->bindParam(":role", $role);
             return $stmt->execute();
-        } catch (PDOException $e) { return false; }
+        } catch (PDOException $e) {
+            return false;
+        }
     }
-    
-    // 2. ACTUALIZAR (Limpio: sin email)
+
     public function update($id, $username, $role, $passwordHash = null)
     {
-         if ($passwordHash) {
+        if ($passwordHash) {
             $query = "UPDATE " . $this->table . " 
                       SET username = :username, role = :role, password = :password 
                       WHERE id = :id";
@@ -92,21 +84,21 @@ class User
                       WHERE id = :id";
         }
 
-         try {
+        try {
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":username", $username);
             $stmt->bindParam(":role", $role);
             $stmt->bindParam(":id", $id);
-            
+
             if ($passwordHash) {
                 $stmt->bindParam(":password", $passwordHash);
             }
-            
-            return $stmt->execute();
-        } catch (PDOException $e) { return false; }
-    }
 
-    // 3. ELIMINAR
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
     public function delete($id)
     {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
@@ -114,7 +106,8 @@ class User
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":id", $id);
             return $stmt->execute();
-        } catch (PDOException $e) { return false; }
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 }
-?>

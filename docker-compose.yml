@@ -44,7 +44,7 @@ services:
       - N8N_PROTOCOL=http
       - NODE_ENV=production
       - WEBHOOK_URL=http://localhost:5678/
-      - GENERIC_TIMEZONE=Europe/Madrid # Cambia a tu zona horaria
+      - GENERIC_TIMEZONE=Europe/Madrid 
     volumes:
       - n8n_data:/home/node/.n8n
 

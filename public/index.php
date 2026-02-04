@@ -40,7 +40,7 @@ switch ($action) {
         break;
     case 'update_plan_subscription':
         (new PlanController())->updateSubscription();
-    break;
+        break;
 
     // Gestion de planes
     case 'dashboard':
@@ -55,7 +55,7 @@ switch ($action) {
     case 'delete_plan':
         (new PlanController())->delete(); // Ver un plan individual (show)
         break;
-    
+
     // Configuracion del plan (solo admins del plan)
     case 'plan_settings':
         (new PlanController())->viewSettings(); // Muestra formulario de editar plan
@@ -82,16 +82,16 @@ switch ($action) {
         break;
     case 'view_receipt':
         (new ExpenseController())->viewReceipt();
-    break;
+        break;
 
 
     // Administración global
     case 'admin_panel':
         (new AdminController())->index(); // Dashboard general de admin
         break;
-    
+
     case 'admin_store_user':
-        (new AdminController())->storeUser(); // (FALTA) Guardar usuario creado por admin
+        (new AdminController())->storeUser(); // Guardar usuario creado por admin
         break;
     case 'admin_update_user':
         (new AdminController())->updateUser(); // (FALTA) Guardar edición

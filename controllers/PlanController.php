@@ -28,18 +28,16 @@ class PlanController
         $planModel = new Plan($db);
         $expenseModel = new Expense($db);
 
-        $isGlobalAdmin = ($_SESSION['role'] ?? '') === 'admin';
-
-        if ($isGlobalAdmin) {
-            $plan = $planModel->getPlanById($planId);
-            $currentUserRole = 'admin';
-        } else {
-            $plan = $planModel->getPlanDetails($planId, $_SESSION['user_id']);
-            $currentUserRole = $planModel->getUserRole($planId, $_SESSION['user_id']);
-        }
+        $globalRole = $_SESSION['role'] ?? 'user';
+        $planRole = $planModel->getUserRole($planId, $_SESSION['user_id']);
+        $plan = $planModel->getPlanById($planId);
 
         if (!$plan) {
-            die("El plan no existe o no tienes permiso para verlo.");
+            die("El plan no existe.");
+        }
+
+        if (!$planRole && $globalRole !== 'admin') {
+            die("Acceso denegado. No eres miembro de este plan.");
         }
 
         $members = $planModel->getMembers($planId);
@@ -50,43 +48,49 @@ class PlanController
         require '../views/layout/footer.php';
     }
 
-   public function viewSettings()
+    public function viewSettings()
     {
-        if (!isset($_SESSION['user_id'])) { /* ... redirect login ... */ }
-        $planId = $_GET['id']; // ... validar isset ...
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+
+        if (!isset($_GET['id'])) {
+            header("Location: index.php?action=dashboard");
+            exit;
+        }
+        $planId = $_GET['id'];
 
         $db = (new Database())->getConnection();
         $planModel = new Plan($db);
         $expenseModel = new Expense($db);
-        // $userModel ya no es estrictamente necesario aquí para el email, 
-        // porque el email viene de plan_members
 
-        // Validar acceso
         $plan = $planModel->getPlanDetails($planId, $_SESSION['user_id']);
-        if (!$plan) die("Acceso denegado.");
 
-        // --- CAMBIO CLAVE ---
-        // Recuperamos los datos de LA TABLA INTERMEDIA (rol, email, terms)
+        if (!$plan) {
+            die("Acceso denegado o el plan no existe.");
+        }
+
         $memberData = $planModel->getMemberDetails($planId, $_SESSION['user_id']);
-        
-        // Pasamos esto a la vista
+
+        $currentUserRole = $memberData['role']; 
         $currentUserSubscription = [
-            'email' => $memberData['notification_email'],
-            'terms' => $memberData['terms_accepted']
+            'email' => $memberData['notification_email'] ?? '',
+            'terms' => $memberData['terms_accepted'] ?? false
         ];
-        $currentUserRole = $memberData['role'];
 
         $members = $planModel->getMembers($planId);
         $expenses = $expenseModel->getByPlan($planId);
         $totalExpenses = 0;
-        foreach ($expenses as $e) { $totalExpenses += $e['amount']; }
+        foreach ($expenses as $e) {
+            $totalExpenses += $e['amount'];
+        }
 
         require '../views/layout/header.php';
         require '../views/plans/plan_settings.php';
         require '../views/layout/footer.php';
     }
 
-    // --- NUEVA ACCIÓN ---
     public function updateSubscription()
     {
         if (!isset($_SESSION['user_id']) || !isset($_POST['plan_id'])) {
@@ -99,7 +103,7 @@ class PlanController
 
         $planId = $_POST['plan_id'];
         $userId = $_SESSION['user_id'];
-        
+
         $email = trim($_POST['notification_email']);
         $terms = isset($_POST['terms_accepted']) ? true : false;
 
@@ -145,14 +149,12 @@ class PlanController
         $plan = new Plan($db);
 
         $planId = $_POST['plan_id'];
-        
-        // CAMBIO: Recibimos username en lugar de email
+
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 
         $role = $plan->getUserRole($planId, $_SESSION['user_id']);
         if ($role !== 'admin') die("No tienes permisos para añadir gente.");
 
-        // CAMBIO: Buscamos por nombre de usuario
         $existingUser = $user->findByUsername($username);
 
         if ($existingUser) {
@@ -160,7 +162,6 @@ class PlanController
             try {
                 $plan->addMember($planId, $targetUserId, 'member');
             } catch (Exception $e) {
-                // Silencioso si ya era miembro
             }
             header("Location: index.php?action=plan_settings&id=" . $planId);
         } else {
@@ -194,4 +195,3 @@ class PlanController
         header("Location: index.php?action=dashboard");
     }
 }
-?>
