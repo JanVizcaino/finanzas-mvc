@@ -43,6 +43,8 @@ class PlanController
         $members = $planModel->getMembers($planId);
         $expenses = $expenseModel->getByPlan($planId);
 
+        $relatedPlans = $planModel->getRelatedPlans($_SESSION['user_id'], $planId, $plan['name']);
+
         require '../views/layout/header.php';
         require '../views/plans/show.php';
         require '../views/layout/footer.php';
@@ -141,7 +143,6 @@ class PlanController
         header("Location: index.php?action=dashboard");
     }
 
-    // --- FUNCIÓN ACTUALIZADA ---
     public function storeMember()
     {
         $db = (new Database())->getConnection();
@@ -194,4 +195,5 @@ class PlanController
         $planModel->delete($planId);
         header("Location: index.php?action=dashboard");
     }
+ 
 }

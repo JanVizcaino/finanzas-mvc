@@ -145,6 +145,34 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
+    <?php if (!empty($relatedPlans)): ?>
+        <div class="mt-12 mb-8 border-t border-secondary/20 pt-8">
+            <div class="flex items-center gap-2 mb-4">
+                <i class="fa-solid fa-wand-magic-sparkles text-primary"></i>
+                <h3 class="text-text font-medium text-lg">Quizás te interese...</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <?php foreach ($relatedPlans as $related): ?>
+                    <a href="index.php?action=view_plan&id=<?= $related['id'] ?>" 
+                       class="block p-4 bg-background border border-secondary/20 rounded-lg hover:border-primary/50 hover:shadow-sm transition group">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-text font-semibold group-hover:text-primary transition truncate">
+                                <?= htmlspecialchars($related['name']) ?>
+                            </h4>
+                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-secondary/10 text-secondary">
+                                <?= $related['currency'] ?>
+                            </span>
+                        </div>
+                        <p class="text-secondary text-xs line-clamp-2 h-8">
+                            <?= htmlspecialchars($related['detail'] ?? 'Sin descripción') ?>
+                        </p>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
 </div>
 
 <div id="expenseSlideOverBackdrop" class="fixed inset-0 z-50 invisible">

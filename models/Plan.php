@@ -187,4 +187,52 @@ class Plan
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+
+public function getRelatedPlans($userId, $currentPlanId, $currentPlanName)
+    {
+        $cleanName = mb_strtolower(trim(preg_replace('/[^\p{L}0-9\s]/u', '', $currentPlanName)));
+        
+        $words = explode(' ', $cleanName);
+
+        $stopWords = ['de', 'la', 'el', 'en', 'y', 'a', 'los', 'las', 'del', 'un', 'una', 'gastos', 'plan', 'con'];
+        
+        $keywords = array_filter($words, function($w) use ($stopWords) {
+            return strlen($w) > 2 && !in_array($w, $stopWords);
+        });
+
+        if (empty($keywords)) {
+            return [];
+        }
+
+        $query = "SELECT DISTINCT p.* FROM financial_plans p
+                  JOIN plan_members pm ON p.id = pm.plan_id
+                  WHERE pm.user_id = :user_id 
+                  AND p.id != :current_id 
+                  AND (";
+
+        $conditions = [];
+        $params = [
+            ':user_id' => $userId,
+            ':current_id' => $currentPlanId
+        ];
+
+        $i = 0;
+        foreach ($keywords as $word) {
+            $key = ":word_$i";
+            $conditions[] = "p.name ILIKE $key"; 
+            $params[$key] = "%$word%"; 
+            $i++;
+        }
+
+        $query .= implode(' OR ', $conditions) . ")";
+        $query .= " ORDER BY p.created_at DESC LIMIT 3"; 
+
+        try {
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 }
