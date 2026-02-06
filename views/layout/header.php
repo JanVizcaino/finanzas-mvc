@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanzas SaaS</title>
+    <title>ODIN - Easy Finances</title>
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -12,6 +12,7 @@
 
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="../../assets/favicon.ico">
     <style type="text/tailwindcss">
 @theme {
     --font-sans: "Inter", sans-serif;
@@ -36,11 +37,11 @@ body.dark {
     
     <?php if (isset($_SESSION['user_id']) && ($_GET['action'] ?? '') !== 'login'): ?>
 
-        <nav class="bg-background shadow-sm h-16 px-4 sm:px-6 flex justify-between items-center z-10 sticky top-0 border-b border-secondary/10">
+        <nav class="bg-background shadow-sm py-12 h-16 px-4 sm:px-6 flex justify-between items-center z-10 sticky top-0 border-b border-secondary/10">
 
             <div class="flex items-center gap-2 shrink-0">
                 <a href="index.php?action=dashboard">
-                    <h1 class="text-text">Odin</h1>
+                    <img src="../../assets/logo.png" class="w-auto h-12 sm:h-14 object-contain" alt="Logo">
                 </a>
             </div>
 

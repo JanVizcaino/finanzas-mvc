@@ -136,7 +136,7 @@
                                         <i class="fa-solid fa-trash text-xs"></i>
                                     </a>
                                 </div>
-                            <?php endif; ?>docker-compose up -d
+                            <?php endif; ?>
                         </div>
                     </div>
                         </div>

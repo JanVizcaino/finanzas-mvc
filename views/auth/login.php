@@ -3,7 +3,7 @@
     <div class="w-full max-w-sm bg-background rounded-lg shadow-md p-6 sm:p-8 flex flex-col items-center gap-5 border border-secondary/10">
 
         <div class="flex flex-col items-center gap-5 w-full">
-            <img src="../../assets/BlueandGold.png" class="w-auto h-12 sm:h-14 object-contain" alt="Logo">
+            <img src="../../assets/logo.png" class="w-auto h-22 sm:h-26 object-contain" alt="Logo">
 
             <div class="text-center w-full">
                 <h1 class="text-text text-lg sm:text-xl font-semibold">Bienvenido de nuevo</h1>
