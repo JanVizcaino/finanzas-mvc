@@ -6,7 +6,11 @@ services:
       - "8081:80"
     volumes:
       - ./:/var/www/html
-      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini 
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    environment:
+      - N8N_WEBHOOK_URL=http://host.docker.internal:5678/webhook/odin_mvc
+      - N8N_API_SECRET=odin_secure_token_v1_xyz987
+      - APP_BASE_URL=http://localhost:8081     
     depends_on:
       - db
 

@@ -2,10 +2,16 @@
 session_start();
 
 require_once '../config/Database.php';
+require_once '../config/Config.php';      
+require_once '../helpers/Security.php';  
+require_once '../helpers/Webhook.php';  
+require_once '../helpers/Logger.php';  
+
 require_once '../controllers/UserController.php';
 require_once '../controllers/PlanController.php';
 require_once '../controllers/ExpenseController.php';
 require_once '../controllers/AdminController.php';
+
 
 
 $action = $_GET['action'] ?? 'login';

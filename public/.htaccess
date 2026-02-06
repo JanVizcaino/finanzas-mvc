@@ -1,0 +1,15 @@
+RewriteEngine On
+
+RewriteRule ^(app|config|logs|helpers|models|controllers|vendor) - [F,L]
+
+<FilesMatch "^\.(env|json|lock|git)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+Options -Indexes

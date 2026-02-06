@@ -26,6 +26,8 @@ CREATE TABLE financial_plans (
 CREATE TABLE plan_members (
     plan_id INT REFERENCES financial_plans(id) ON DELETE CASCADE,
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    notification_email VARCHAR(255),
+    terms_accepted boolean DEFAULT false,
     role VARCHAR(20) DEFAULT 'member',
     PRIMARY KEY (plan_id, user_id)
 );
@@ -40,14 +42,5 @@ CREATE TABLE expenses (
     category VARCHAR(50),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     detail text,
-    receipt_path VARCHAR(255) -- <--- ¡ESTA ES LA COLUMNA QUE FALTABA!
-);
-
--- DATOS INICIALES
-INSERT INTO users (username, email, password, role)
-VALUES (
-  'jan',
-  'jan@gmail.com',
-  '$2y$10$wL.F.1i.O.1i.O.1i.O.1ieO8y1.1i.O.1i.O.1i.O.1i.O.1i.O', 
-  'admin'
+    receipt_path VARCHAR(255) 
 );
