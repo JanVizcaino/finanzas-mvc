@@ -17,12 +17,12 @@
 
 ## 🛠️ Stack Tecnológico
 
-* **Backend:** PHP 8.1 (Nativo, Arquitectura MVC).
+* **Backend:** PHP Nativo (Arquitectura MVC).
 * **Base de Datos:** PostgreSQL 15.
 * **Servidor Web:** Apache (con módulos `rewrite` y configuración `.htaccess`).
 * **Automatización:** n8n (Dockerizado).
 * **Infraestructura:** Docker & Docker Compose.
-* **Frontend:** HTML5, CSS3, JavaScript (Vanilla).
+* **Frontend:** HTML5, CSS3, Tailwind, JavaScript Vanilla.
 
 ---
 
@@ -61,7 +61,7 @@ Sigue estos pasos para levantar el entorno de producción local:
 
 ### 1. Clonar el repositorio
 ```bash
-git clone [https://github.com/tu-usuario/odin-finance.git](https://github.com/tu-usuario/odin-finance.git)
+git clone [https://github.com/JanVizcaino/finanzas-mvc.git](https://github.com/JanVizcaino/finanzas-mvc.git)
 cd odin-finance
 ```
 
@@ -142,11 +142,11 @@ docker exec -it odin_web_1 tail -f logs/odin_errors.log
 
 ## 🗺️ Roadmap y Mejoras Futuras
 
-* [ ] Despliegue en VPS con Certificado SSL (Let's Encrypt).
-* [ ] Implementación de CDN (AWS S3) para servir imágenes en emails.
-* [ ] Migración a Framework (Laravel/Symfony) para escalabilidad.
+* [ ] Despliegue en Servidor Privado con Certificado SSL.
+* [ ] Implementación de CDN para servir imágenes en emails.
+* [ ] Migración a Framework Laravel para escalabilidad.
 * [ ] Integración de notificaciones vía Telegram/Discord en n8n.
-* [ ] Algoritmo de simplificación de deudas (Splitwise-like).
+* [ ] Algoritmo de simplificación de deudas.
 
 ---
 
